@@ -9,11 +9,11 @@ const delayedExtraction = async() => {
               const lnData = $(
                 ".ember-view.display-flex.justify-flex-start.artdeco-button.artdeco-button--1.artdeco-button--muted.artdeco-button--tertiary.pv3"
               );
+              clearInterval(checkExist);
             const linkedINProfile = lnData[0].href.split("/");
             console.log("linkedINProfile:", linkedINProfile);
             const data = await getDetailsByLinkedInId(linkedINProfile[5]);
             resolve(data);
-           clearInterval(checkExist);
         }
      }, 100);
   });
@@ -40,6 +40,7 @@ const putInScreen = async () => {
       console.log("inside!");
       getContentJson().then((candidate) => {
         console.log("candidate:", candidate);
+        
         const $newdiv1 = $(`<div id='layer'> 
             <div>Current CTC: ${candidate.currentSalary}</div>
             <div>Expected CTC: ${candidate.expectedSalary}</div>

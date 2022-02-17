@@ -17,12 +17,13 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
       {
         url: "popup/popup.html",
         type: "popup",
-        // ...payload
         // alwaysOnTop:true,
         focused: true,
         height: 700,
         width:700,
-        top: 0
+        top: 0,
+        left: 100,
+        // ...payload,
       },
       function (win) {
         sendResponse(win);

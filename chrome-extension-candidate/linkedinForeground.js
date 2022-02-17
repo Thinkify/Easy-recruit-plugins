@@ -6,6 +6,7 @@
 
 const addDetailsButton = `<div class="add-details">
         <button>Add Details</button>
+        <div id ="content"></div>
 </div>`;
 
 const vetButton = `
@@ -16,14 +17,14 @@ const vetButton = `
 function addClicked(event){
     event.stopPropagation();
     console.log('addClicked is clicked!!');
-    // const width = 440;
-    // const height = 220;
-    // const left = (screen.width/2)-(width/2);
-    // const top = (screen.height/2)-(height/2); 
+    const width = 440;
+    const height = 220;
+    const left = (screen.width/2)-(width/2);
+    const top = (screen.height/2)-(height/2); 
 
     chrome.runtime.sendMessage({
         action: 'createWindowPopup',
-        // payload:{width,height,left,top}
+        payload:{width,height,left,top}
       },
       function(createdWindow) {
         console.log(createdWindow);

@@ -1,0 +1,19 @@
+.add-details,.vet-button{
+    color: #0a66c2;
+    border-radius: 2.6rem;
+    border: 2px solid #0a66c2;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    display: flex;
+    margin: 0 2rem;
+}
+
+.add-details button ,{
+    color: #0a66c2;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.vet-button{
+    padding: 8px;
+}

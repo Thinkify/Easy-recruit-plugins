@@ -6,13 +6,16 @@
 console.log("External file is also loaded!");
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-  console.log("External file is also loaded!");
+  console.log("request.getPage : Open popup!", request);
+  if (request.getPage) {
+		const url = chrome.runtime.getURL('popup/popup.html');
+		sendResponse(url);
+  }
 
   if (request && request.action === "createWindowPopup") {
-
     console.log("createWindowPopup!!!");
 
-    const {payload} = request;
+    const { payload } = request;
     chrome.windows.create(
       {
         url: "popup/popup.html",
@@ -20,7 +23,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         // alwaysOnTop:true,
         focused: true,
         height: 700,
-        width:700,
+        width: 700,
         top: 0,
         left: 100,
         // ...payload,

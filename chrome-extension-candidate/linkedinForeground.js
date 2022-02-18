@@ -101,7 +101,6 @@ const similarJobsUber=`
   
 </div>
 `
-
 function createAfterVetPopup(testResult){
   const MockInterview = `<div class='mentor-button'>Get MockInterview</div>`;
   const LearnMore = `<div class='mentor-button'>Learn more</div>`;
@@ -197,19 +196,28 @@ function createAfterVetPopup(testResult){
 
   const popup = `
         <div id='after-vet-popup-container' class="after-vet-popup-container hidden">
-          <div class="after-vet-popup-container-content">
-              ${section2}
-              ${section1}
-              ${section3}
-          </div>       
+            
         </div>
   `;
   return popup;
 }
 
+function getFrameHtml(htmlFileName) {
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("GET", chrome.extension.getURL(htmlFileName), false);
+    xmlhttp.send();
+    return xmlhttp.responseText;
+}
+
 function showTestResults(e){
   e.stopPropagation();
   $('#after-vet-popup-container').removeClass('hidden');
+  var iframe = document.createElement('iframe');
+	document.getElementById("after-vet-popup-container").appendChild(iframe);
+	chrome.runtime.sendMessage({getPage: "popup/popup.html"}, function(response) {
+		console.log("response:",response);
+		iframe.src = response;
+	  });
 };
 
 function hideTestResults(e){

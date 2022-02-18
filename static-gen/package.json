@@ -6,7 +6,9 @@
     "start": "next start",
     "export": "next export",
     "prestart": "npm run build && npm run export",
-    "startStatic": "prestart && serve out"
+    "startStatic": "prestart && serve out",
+    "finalPushToCandidatePlugin": "npm run prestart && cp -R out ../chrome-extension-candidate"
+
   },
   "dependencies": {
     "next": "latest",

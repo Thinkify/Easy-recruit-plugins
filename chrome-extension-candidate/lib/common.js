@@ -1,13 +1,15 @@
+// const BASE_URL = 'https://candidate-infon.herokuapp.com/api/v1/candidates';
+const BASE_URL = 'http://localhost:5000/api/v1/candidates';
+
 const getDetailsByLinkedInId = (linkedINProfile='') => {
     return new Promise((resolve, reject) => {
         console.log('name to be fetched: ',linkedINProfile)
-        fetch(`http://localhost:8081/candidates/getCandidateByLinkedInProfile/${linkedINProfile}`)
+        fetch(`${BASE_URL}/getCandidateByAny?linkedInProfile=${linkedINProfile}`)
           .then(response => response.json())
           .then(data => {
-              console.log("data",data);
-              const candi = data.candidate[0];
+              const {candidate} = data;
               resolve({
-                  ...candi,
+                  ...candidate,
               });
           }).catch(err => {
               console.log('error:',err);

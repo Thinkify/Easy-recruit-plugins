@@ -8,7 +8,8 @@ console.log("External file is also loaded!");
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   console.log("request.getPage : Open popup!", request);
   if (request.getPage) {
-		const url = chrome.runtime.getURL('popup/popup.html');
+		const url = chrome.runtime.getURL('out/index.html');
+		console.log('url',url);
 		sendResponse(url);
   }
 

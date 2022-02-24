@@ -58,7 +58,7 @@ const Apply: NextPage = () => {
     });
     console.log('responce:',responce);
     if(responce?.email){
-      router.push('/test-page');
+      router.push('/take-test');
     }
   };
 

@@ -6,18 +6,20 @@ import { type } from 'os'
 import React, { useState, useEffect } from 'react'
 import CandidateDetailsView from '../components/CandidateDetailsView'
 import CandidateTestResults from '../components/CandidateTestResults'
+import CourseForCandidate from '../components/CourseForCandidate'
+import MentorsForCandidate from '../components/MentorsForCandidate'
 
 interface Candidate {
-	contact?: string | undefined,
-    currentSalary?: string | undefined,
-	noticePeriod?: string | undefined,
-    expectedSalary?: string | undefined,
-	email: string | undefined,
-    date?: string | undefined,
+  contact?: string | undefined
+  currentSalary?: string | undefined
+  noticePeriod?: string | undefined
+  expectedSalary?: string | undefined
+  email: string | undefined
+  date?: string | undefined
 }
 
 const Home: NextPage = () => {
-  const [candidate, setCandidate] = useState<Candidate>({email:''})
+  const [candidate, setCandidate] = useState<Candidate>({ email: '' })
   const router = useRouter()
 
   useEffect(() => {
@@ -54,13 +56,25 @@ const Home: NextPage = () => {
             />
           )}
         </section>
-		<section className={'mt-4'}>
-			<CandidateTestResults 
-				overAllScore={'4'}
-				jsScore={'1'}
-				reactScore={'5'}
-			/>
-		</section>
+        <section className={'mt-4'}>
+          <CandidateTestResults
+            overAllScore={'4'}
+            jsScore={'1'}
+            reactScore={'5'}
+          />
+        </section>
+        <section className={'mt-4'}>
+          <div className={'m-4 text-lg font-medium text-gray-700'}>
+            Need Mentors?{' '}
+          </div>
+          <MentorsForCandidate />
+        </section>
+        <section className={'mt-4'}>
+          <div className={'m-4 text-lg font-medium text-gray-700'}>
+            Recommended courses to improve yourself{' '}
+          </div>
+          <CourseForCandidate />
+        </section>
       </main>
     </div>
   )

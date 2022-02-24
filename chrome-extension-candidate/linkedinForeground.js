@@ -1,154 +1,163 @@
-// This script gets injected into any opened page
-// whose URL matches the pattern defined in the manifest
-// (see "content_script" key).
-// Several foreground scripts can be declared
-// and injected into the same or different pages.
+let instance = null;
+class Candidate {
+	constructor(name='',linkedINProfile='',data=null) {
+  
+	  if(!instance){
+		instance = this;
+	  }
 
-const addDetailsButton = `<div class="add-details">
-        <button>Add Details</button>
+	  this.name = name;
+	  this.linkedINProfile = linkedINProfile;
+	  this.data = data;
+  
+	  return instance;
+	}
+  
+	getDetais() {
+	  return {
+		name:this.name,
+		linkedINProfile:this.name,
+		data: this.data,
+	  }
+	}
+
+	setDetails({name,linkedINProfile,data}){
+		if(name)this.name = this.name;
+		if(linkedINProfile)this.linkedINProfile = linkedINProfile;
+		if(data)this.data=data;
+	}
+}
+
+let candidateInfo = new Candidate();
+
+const addDetailsButton = `<div class="add-details" id="demo-modal"><button>Open Demo Modal</button></div>`;
+
+const StatusButton = `<div class="add-details"><button>Know Your Status </button></div>`;
+
+const vetButton = `<a href="https://triplebyte.com/wt/thinkify/start/1Pq2hNl8qni/71104" target="_blank"><div class="vet-button">Vet Yourself</div></a>`;
+
+const mainPopup = `<div id="demo-modal-popup" class="modal">
+	<div class="modal__content">
+		<div id='iframe-wrapper'>
+		</div>
+		<a href="#" class="modal__close">&times;</a>
+	</div>
 </div>`;
 
-const StatusButton = `<div class="add-details">
-        <button>Know Your Status </button>
-</div>`;
-
-const vetButton = `
-		<a href="https://triplebyte.com/wt/thinkify/start/1Pq2hNl8qni/71104" target="_blank">
-			<div class="vet-button">Vet Yourself</div>
-		</a>`;
-
-function createAfterVetPopup(testResult){
-  const MockInterview = `<div class='mentor-button'>Get MockInterview</div>`;
-  const LearnMore = `<div class='mentor-button'>Learn more</div>`;
-  const overallScore = testResult['Overall score'];
-  const javaScriptKnowledge = testResult['JavaScript Knowledge'];
-  const reactKnowledge = testResult['React Knowledge'];
+const routeToJoin = '/apply'
 
 
-  const popup = `
-        <div id='after-vet-popup-container' class="after-vet-popup-container hidden">
-            <div class="popup-close">X</div>
-        </div>
-  `;
-  return popup;
-}
-
-function createBeforePopup() {
-  const popup = `
-  <div id='after-vet-popup-container' class="after-vet-popup-container hidden">
-      <div class="popup-close">X</div>
-  </div>
-`;
-return popup;
-}
-
-function  createPopup() {
-  return popup;
-}
-
-function getFrameHtml(htmlFileName) {
-    var xmlhttp = new XMLHttpRequest();
-    xmlhttp.open("GET", chrome.extension.getURL(htmlFileName), false);
-    xmlhttp.send();
-    return xmlhttp.responseText;
-}
-
-function showTestResults(e){
+function showTestResults(e = null) {
+  if (e) {
+    e.stopPropagation();
+  }
+  var iframe = document.createElement("iframe");
+  let { linkedINProfile,name } = getDetailsOfCandidate();
+  document.getElementById("iframe-wrapper").appendChild(iframe);
+  console.log('candidate:',candidateInfo.getDetais())
+  let {data} = candidateInfo.getDetais();
   debugger;
-  e.stopPropagation();
-  $('#after-vet-popup-container').removeClass('hidden');
-  var iframe = document.createElement('iframe');
-  const linkedINProfile = getDetailsOfCandidate();
-	document.getElementById("after-vet-popup-container").appendChild(iframe);
-	iframe.src = `http://localhost:3000/?linkedInProfile=deepanshu-tyagi-209400227`;
-
-};
-
-function hideTestResults(e){
-  e.stopPropagation();
-  console.log('hide data...')
-  $('#after-vet-popup-container').addClass('hidden');
-};
-
-function addClicked(event){
-    event.stopPropagation();
-    console.log('addClicked is clicked!!');
-    var iframe = document.createElement('iframe');
-    $('#after-vet-popup-container').removeClass('hidden');
-    const linkedINProfile = getDetailsOfCandidate();
-	  document.getElementById("after-vet-popup-container").appendChild(iframe);
-	  iframe.src = `http://localhost:3000/apply`;
-    $('.popup-close').click(hideTestResults);
-    
+  if(data?.linkedInProfile && data?.testResult){
+	iframe.src = `http://localhost:3000/?linkedINProfile=${data?.linkedInProfile}`;
+  } else if(data?.linkedInProfile){
+	iframe.src = `http://localhost:3000/take-test`;
+  } else {
+	iframe.src = `http://localhost:3000/apply/?linkedInProfile=${data?.linkedInProfile}&name=${name}`;
+  }
 }
+
+function addClicked(event) {
+  event.stopPropagation();
+  console.log("addClicked is clicked!!");
+  var iframe = document.createElement("iframe");
+  $("#after-vet-popup-container").removeClass("hidden");
+  const { linkedINProfile, name } = getDetailsOfCandidate();
+  document.getElementById("after-vet-popup-container").appendChild(iframe);
+  iframe.src = `http://localhost:3000/apply/?linkedInProfile=${linkedINProfile}&name=${name}`;
+  iframe.src = `http://localhost:3000/?linkedINProfile=${linkedINProfile}`;
+  $(".popup-close").click(hideTestResults);
+}
+
+
 
 const getDetailsOfCandidate = () => {
-  const contentExtracted = JSON.parse($('code:contains("publicIdentifier")')[0].textContent);
-  const linkedINProfile = contentExtracted.included[0].publicIdentifier;
-  return linkedINProfile || '';
+
+  const contentExtracted = JSON.parse(
+    $('code:contains("publicIdentifier")')[0].textContent
+  );
+
+  const linkedINProfile = contentExtracted?.included[0]?.publicIdentifier;
+  const firstName = contentExtracted?.included[0]?.firstName || "";
+  const lastName = contentExtracted?.included[0]?.lastName || "";
+  const name = firstName + " " + lastName;
+
+  candidateInfo.setDetails((linkedINProfile,name));
+
+  return {
+    linkedINProfile,
+    name,
+  };
+};
+
+function showMainPopupFirst() {
+  $("#demo-modal-popup").addClass("modal__target");
+  $("#demo-modal-popup").click(hideMainPopupFirst);
+  showTestResults();
+  // showTestResults();
 }
 
+function hideMainPopupFirst() {
+  $("#demo-modal-popup").removeClass("modal__target");
+  $('#iframe-wrapper').html('');
+};
+
 const getContentJson = async (linkedINProfile) => {
-    const data = await getDetailsByLinkedInId(linkedINProfile);
-    return data;
-  };
+  const data = await getDetailsByLinkedInId(linkedINProfile);
+  return data;
+};
 
-$( document ).ready(function() {
-    console.log( "ready!" );
-    const linkedINProfile = getDetailsOfCandidate();
+$(document).ready(function () {
+  console.log("ready!");
 
-    // check if the data is already present 
-    var checkExist = setInterval(function() {
-        if ($('.jobs-apply-button--top-card').length) {
-           console.log("Exists!");
-            const model = $('.jobs-save-button ').parent();
+  const { linkedINProfile } = getDetailsOfCandidate();
 
-            function appendButton(model,buttonView) {
-                  newdiv2 = document.createElement("div"),
-                  existingdiv1 = document.getElementById("foo");
-                  model.append( buttonView, [ newdiv2, existingdiv1 ] );
-            }
+  var checkExist = setInterval(function () {
+    if ($(".jobs-apply-button--top-card").length) {
+      console.log("Exists!");
+      const model = $(".jobs-save-button ").parent();
 
-            getContentJson(linkedINProfile).then((candidate) => {
-                console.log("candidate:", candidate);
-                let buttonView = addDetailsButton;
-                let attachedPopup = '';
-                
-                if(candidate && candidate.testResult){
-                  appendButton(model, StatusButton);
-                  const attachedPopup = createBeforePopup()
-                  $('.add-details').append(attachedPopup);
-                  $('.add-details').click(showTestResults);
-                }else if(candidate && candidate.linkedInProfile){
-                  appendButton(model, vetButton);
-                } else{
-                  appendButton(model, addDetailsButton);
-                  const attachedPopup = createBeforePopup()
-                  $('.add-details').append(attachedPopup);
-                  $('.add-details').click(addClicked);
-                }
+      function appendButton(model, buttonView) {
+        (newdiv2 = document.createElement("div")),
+          (existingdiv1 = document.getElementById("foo"));
+        model.append(buttonView, [newdiv2, existingdiv1]);
+      }
 
-                
-                // if(candidate && candidate.testResult){
-                //   $('.add-details').click(showTestResults);
-                //   $('.add-details').append(attachedPopup);
-                //   $('.popup-close').click(hideTestResults);
-                // }else if(candidate && candidate.linkedInProfile){
-                //   debugger;
-                //   $('.add-details').click(addClicked);
-                // } else{
-                //   const attachedPopup = createPopup()
-                //   $('.add-details').append(attachedPopup);
-                //   $('.add-details').click(addClicked);
-                // }
-               
-              });
+      getContentJson(linkedINProfile).then((candidate) => {
+        console.log("candidate:", candidate);
+		candidateInfo.setDetails({data:candidate});
+        appendButton(model, addDetailsButton + mainPopup);
+        setTimeout(() => {
+          $("#demo-modal").click(showMainPopupFirst);
+        }, 0);
 
-           clearInterval(checkExist);
-        }
-     }, 100);
+        // let buttonView = addDetailsButton;
+        // let attachedPopup = "";
+        // if (candidate && candidate.testResult) {
+        //   appendButton(model, StatusButton);
+        //   const attachedPopup = createBeforePopup();
+        //   $(".add-details").append(attachedPopup);
+        //   $(".add-details").click(showTestResults);
+        // } else if (candidate && candidate.linkedInProfile) {
+        //   appendButton(model, vetButton);
+        // } else {
+        //   appendButton(model, addDetailsButton);
+        //   const attachedPopup = createBeforePopup();
+        //   $(".add-details").append(attachedPopup);
+        //   $(".add-details").click(addClicked);
+        // }
+      });
 
-    // $('.jobs-apply-button--top-card').append(addDetailsButton);
-
+      clearInterval(checkExist);
+    }
+  }, 100);
 });
-

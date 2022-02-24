@@ -18,8 +18,9 @@ type UserSubmitForm = {
 
 const Apply: NextPage = () => {
 
+  const router = useRouter();
+  console.log('router:',router.query.name,router.query.linkedInProfile);
 
-  const router = useRouter()
 
   const validationSchema = Yup.object().shape({
     name: Yup.string().required('Name is required'),
@@ -75,6 +76,7 @@ const Apply: NextPage = () => {
                       <input
                         type="text"
                         id="first-name"
+                        defaultValue={router?.query?.name || ''}
                         autoComplete="given-name"
                         {...register('name')}
                         className={`mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md form-control ${errors.name ? 'is-invalid' : ''}`}
@@ -88,6 +90,7 @@ const Apply: NextPage = () => {
                       <input
                         type="text"
                         id="contact"
+                        defaultValue={router?.query?.contact || ''}
                         autoComplete="given-name"
                         {...register('contact')}
                         className={`mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md form-control ${errors.contact ? 'is-invalid' : ''}`}
@@ -101,6 +104,7 @@ const Apply: NextPage = () => {
                       <input
                         type="email"
                         id="email-address"
+                        defaultValue={router?.query?.email || ''}
                         autoComplete="email"
                         {...register('email')}
                         className={`mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md form-control ${errors.email ? 'is-invalid' : ''}`}
@@ -159,7 +163,8 @@ const Apply: NextPage = () => {
                       </label>
                       <input
                         type="text"
-                        id="first-name"
+                        id="gitHUb"
+                        defaultValue={router?.query?.gitHub || ''}
                         autoComplete="given-name"
                         {...register('gitHub')}
                         className={`mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md form-control ${errors.gitHub ? 'is-invalid' : ''}`}
@@ -173,6 +178,7 @@ const Apply: NextPage = () => {
                       <input
                         type="text"
                         id="linkedInProfile"
+                        defaultValue={router?.query?.linkedInProfile || ''}
                         autoComplete="given-linkedInProfile"
                         {...register('linkedInProfile')}
                         className={`mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md form-control ${errors.linkedInProfile ? 'is-invalid' : ''}`}

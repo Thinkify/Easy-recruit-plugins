@@ -2,7 +2,7 @@ const getDetailsByLinkedInId = (linkedINProfile='') => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         console.log('name to be fetched: ',linkedINProfile)
-        fetch(`http://localhost:8081/candidates/getCandidateByLinkedInProfile/${linkedINProfile}`)
+        fetch(`http://localhost:5000/candidates/getCandidateByLinkedInProfile/${linkedINProfile}`)
           .then(response => response.json())
           .then(data => {
               console.log("data",data);

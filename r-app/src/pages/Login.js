@@ -1,26 +1,37 @@
-import React, { useCallback } from "react";
-import { withRouter } from "react-router";
-import app from "./base";
+import React, { useCallback, useContext } from "react";
+import { withRouter, Redirect } from "react-router";
+import app from "../base.js";
+import { AuthContext } from "../context/Auth";
 
-const SignUp = ({ history }) => {
-  const handleSignUp = useCallback(async event => {
-    event.preventDefault();
-    const { email, password } = event.target.elements;
-    try {
-      await app
-        .auth()
-        .createUserWithEmailAndPassword(email.value, password.value);
-      history.push("/");
-    } catch (error) {
-      alert(error);
-    }
-  }, [history]);
+const Login = ({ history }) => {
+  const handleLogin = useCallback(
+    async event => {
+      event.preventDefault();
+      const { email, password } = event.target.elements;
+      try {
+        await app
+          .auth()
+          .signInWithEmailAndPassword(email.value, password.value);
+        history.push("/");
+      } catch (error) {
+        alert(error);
+      }
+    },
+    [history]
+  );
+
+  const { currentUser } = useContext(AuthContext);
+
+  if (currentUser) {
+    return <Redirect to="/" />;
+  }
 
   return (
     <div className="h-full bg-gradient-to-tl from-green-400 to-indigo-900 w-full py-4 px-4">
             <div className="flex flex-col items-center justify-center">
-                <form onSubmit={handleSignUp} className="bg-white shadow rounded lg:w-1/3  md:w-1/2 w-full p-6 mt-4">
-                    <p tabindex="0" className="focus:outline-none text-2xl font-extrabold leading-6 text-gray-800">SignUp to your account</p>
+                <form onSubmit={handleLogin} className="bg-white shadow rounded lg:w-1/3  md:w-1/2 w-full p-6 mt-4">
+                    <p tabindex="0" className="focus:outline-none text-2xl font-extrabold leading-6 text-gray-800">Login to your account</p>
+                    <p tabindex="0" className="focus:outline-none text-sm mt-4 font-medium leading-none text-gray-500">Dont have account? <a href="javascript:void(0)"   className="hover:text-gray-500 focus:text-gray-500 focus:outline-none focus:underline hover:underline text-sm font-medium leading-none  text-gray-800 cursor-pointer"> Sign up here</a></p>
                     <button aria-label="Continue with google" className="focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-gray-700 py-3.5 px-4 border rounded-lg border-gray-700 flex items-center w-full mt-10">
                         <svg width="19" height="20" viewBox="0 0 19 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M18.9892 10.1871C18.9892 9.36767 18.9246 8.76973 18.7847 8.14966H9.68848V11.848H15.0277C14.9201 12.767 14.3388 14.1512 13.047 15.0812L13.0289 15.205L15.905 17.4969L16.1042 17.5173C17.9342 15.7789 18.9892 13.221 18.9892 10.1871Z" fill="#4285F4" />
@@ -57,12 +68,12 @@ const SignUp = ({ history }) => {
                            </div>
                         </div>
                         <div className="mt-8">
-                            <button type="submit" className="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 text-sm font-semibold leading-none text-white focus:outline-none bg-indigo-700 border rounded hover:bg-indigo-600 py-4 w-full">SignUp</button>
+                            <button role="button" type="submit" className="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 text-sm font-semibold leading-none text-white focus:outline-none bg-indigo-700 border rounded hover:bg-indigo-600 py-4 w-full">Login</button>
                         </div>
                 </form>
             </div>
-        </div>
+    </div>
   );
 };
 
-export default withRouter(SignUp);
+export default withRouter(Login);

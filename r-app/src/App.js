@@ -11,7 +11,7 @@ const App = () => {
   return (
     <AuthProvider>
       <Router>
-        <div className={'App'}>
+        <div className={'App h-screen'}>
           <PrivateRoute exact path="/" component={Home} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/signup" component={SignUp} />

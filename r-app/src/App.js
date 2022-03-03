@@ -8,10 +8,13 @@ import Find from "./pages/Find";
 import AddCandidate from "./pages/AddCandidate";
 import { AuthProvider } from "./context/Auth";
 import PrivateRoute from "./HOC/PrivateRoute";
+import Header from "./components/header";
+
 
 const App = () => {
   return (
     <AuthProvider>
+      <Header></Header>
       <Router>
         <div className={'App h-screen'}>
           <PrivateRoute exact path="/find" component={Find} />

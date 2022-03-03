@@ -3,6 +3,8 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import { withRouter } from "react-router";
+import { createCandidates } from "../services/candidates";
+
 
 const Apply = ({ history,location }) => {
 
@@ -45,10 +47,16 @@ const Apply = ({ history,location }) => {
 
   const onSubmit = async (data) => {
     console.log(JSON.stringify(data, null, 2));
+    const responce = await createCandidates({
+      ...data,
+    });
+    console.log('responce',responce);
     
   };
 
   return (
+    <div className="h-full bg-gradient-to-tl from-green-400 to-indigo-900 w-full py-4 px-4">
+
     <div className="flex min-h-screen flex-col items-center justify-center py-2">
         <div className="mt-5 md:mt-0 md:col-span-2">
             <form onSubmit={handleSubmit(onSubmit)} className={'text-black'}>
@@ -185,6 +193,7 @@ const Apply = ({ history,location }) => {
               </div>
             </form>
           </div>
+    </div>
     </div>
   )
 }

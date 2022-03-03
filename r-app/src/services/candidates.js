@@ -20,7 +20,7 @@ export async function findCandidate({email}) {
 
 export async function createCandidates(postData) {
     try {
-        const res = await apiClient.post("/candidates/getCandidateByAny?", postData, {
+        const res = await apiClient.post("/candidates/addcandidate?", postData, {
           headers: {
             "x-access-token": "token-value",
           },
@@ -31,7 +31,7 @@ export async function createCandidates(postData) {
           headers: res.headers,
           data: res.data,
         };
-        console.log("getRecruter",fortmatResponse(result))
+        console.log("createCandidates",fortmatResponse(result))
         return result;
       } catch (err) {
         console.log(fortmatResponse(err.response?.data || err));

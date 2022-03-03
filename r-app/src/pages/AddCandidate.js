@@ -1,23 +1,23 @@
+import React from 'react'
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import { withRouter } from "react-router";
 
-
-
 const Apply = ({ history,location }) => {
 
     const {search} = location;
-    console.log('search:',search);
-    const query = {
-        name:'',
-        gitHub:'',
-        linkedInProfile:'',
-        contact:'',
-        email:''
+    let query =  new URLSearchParams(search);
+
+    const queryUrl = {
+        name:query.get('name') || '',
+        gitHub:query.get('gitHub') || '',
+        linkedInProfile:query.get('linkedInProfile') || '',
+        contact:query.get('contact') || '',
+        email:query.get('email') || ''
     };
 
-    const {name, linkedInProfile,contact,gitHub,email} = query;
+    const {name, linkedInProfile,contact,gitHub,email} = queryUrl;
 
   const validationSchema = Yup.object().shape({
     name: Yup.string().required('Name is required'),
@@ -35,24 +35,17 @@ const Apply = ({ history,location }) => {
       .max(10, 'Please enter 10 digit number'),
   });
 
-  const {
-    register,
-    handleSubmit,
-    // reset,
-    errors 
-  } = useForm({
+  const { register, formState: { errors }, handleSubmit }  = useForm({
     resolver: yupResolver(validationSchema)
   });
+  console.log('errors;',errors)
+
+
+
 
   const onSubmit = async (data) => {
     console.log(JSON.stringify(data, null, 2));
-    // const responce = await setDetailsByLinkedInId({
-    //   ...data,
-    // });
-    // console.log('responce:',responce);
-    // if(responce?.email){
-    // //   router.push('/take-test');
-    // }
+    
   };
 
   return (

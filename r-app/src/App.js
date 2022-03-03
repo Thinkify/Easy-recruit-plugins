@@ -4,7 +4,6 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
-import Find from "./pages/Find";
 import AddCandidate from "./pages/AddCandidate";
 import { AuthProvider } from "./context/Auth";
 import PrivateRoute from "./HOC/PrivateRoute";
@@ -17,7 +16,6 @@ const App = () => {
       <Router>
         <div className={'App h-screen'}>
           <Header></Header>
-          <PrivateRoute exact path="/find" component={Find} />
           <PrivateRoute exact path="/add" component={AddCandidate} />
           <PrivateRoute exact path="/" component={Home} />
           <Route exact path="/login" component={Login} />

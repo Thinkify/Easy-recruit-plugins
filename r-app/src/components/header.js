@@ -37,7 +37,7 @@ export default function Header() {
             <div>
               <Popover.Group as="nav" className="hidden md:flex space-x-10">
                 <a className="text-base font-medium text-gray-500 hover:text-gray-900">
-                  <Link to="/find">Find Candidate</Link>
+                  <Link to="/">Find Candidate</Link>
                 </a>
                 <a className="text-base font-medium text-gray-500 hover:text-gray-900">
                   <Link to="/add">Add Candidate</Link>
@@ -108,7 +108,7 @@ export default function Header() {
             <div className="py-6 px-5 space-y-6">
               <div className="grid grid-cols-2 gap-y-4 gap-x-8">
                 <div className="text-base font-medium text-gray-900 hover:text-gray-700">
-                  <Link to="/find">Find Candidate</Link>
+                  <Link to="/">Find Candidate</Link>
                 </div>
                 <div className="text-base font-medium text-gray-900 hover:text-gray-700">
                   <Link to="/add">Add Candidate</Link>

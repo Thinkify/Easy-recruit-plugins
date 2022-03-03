@@ -14,9 +14,9 @@ import Header from "./components/header";
 const App = () => {
   return (
     <AuthProvider>
-      <Header></Header>
       <Router>
         <div className={'App h-screen'}>
+          <Header></Header>
           <PrivateRoute exact path="/find" component={Find} />
           <PrivateRoute exact path="/add" component={AddCandidate} />
           <PrivateRoute exact path="/" component={Home} />

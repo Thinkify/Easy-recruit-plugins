@@ -8,6 +8,7 @@ import CandidateDetailsView from '../components/CandidateDetailsView'
 import CandidateTestResults from '../components/CandidateTestResults'
 import CourseForCandidate from '../components/CourseForCandidate'
 import MentorsForCandidate from '../components/MentorsForCandidate'
+import JobsForCandidate from '../components/JobsForCandidate'
 
 interface Candidate {
   contact?: string | undefined
@@ -62,6 +63,12 @@ const Home: NextPage = () => {
             jsScore={'1'}
             reactScore={'5'}
           />
+        </section>
+        <section className={'mt-4'}>
+          <div className={'m-4 text-lg font-medium text-gray-700'}>
+            Recomened jobs for you {' '}
+          </div>
+          <JobsForCandidate />
         </section>
         <section className={'mt-4'}>
           <div className={'m-4 text-lg font-medium text-gray-700'}>

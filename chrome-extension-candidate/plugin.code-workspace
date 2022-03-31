@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": ".."
+		},
+		{
+			"path": "../../BE/CandidateInfoBE"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "Plugin"
+	}
+}

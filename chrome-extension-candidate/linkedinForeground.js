@@ -111,7 +111,7 @@ const getButtonName = (candidate) => {
 
 	const buttonName = {
 		1:'Add details',
-		2:'Vet data',
+		2:'Vet yourself',
 		3:'Next Step'
 	}
 	const addDetailsButton = `<div class="add-details" id="demo-modal"><button>${buttonName[type]}</button></div>`;

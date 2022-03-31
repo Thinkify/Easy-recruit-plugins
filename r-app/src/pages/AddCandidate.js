@@ -26,8 +26,8 @@ const Apply = ({ history,location }) => {
     currentSalary: Yup.string().required('Current CTC is required'),
     expectedSalary: Yup.string().required('Expected CTC is required'),
     noticePeriod: Yup.string().required('NoticePeriod is required'),
-    linkedInProfile: Yup.string().required('NoticePeriod is required'),
-    gitHub: Yup.string().required('NoticePeriod is required'),
+    linkedInProfile: Yup.string().required('LinkedIn is required'),
+    gitHub: Yup.string().required('GitHub is required'),
     email: Yup.string()
       .required('Email is required')
       .email('Email is invalid'),
@@ -86,7 +86,7 @@ const Apply = ({ history,location }) => {
                       />
                       <div className="text-red-500">{errors?.contact?.message}</div>
                     </div>
-                    <div className="col-span-6 sm:col-span-4">
+                    <div className="col-span-6 sm:col-span-3">
                       <label htmlFor="email-address" className="block text-sm font-medium text-gray-700">
                         Email address
                       </label>
@@ -115,11 +115,11 @@ const Apply = ({ history,location }) => {
                     </div>
                     <div className="col-span-6 sm:col-span-3">
                       <label htmlFor="first-name" className="block text-sm font-medium text-gray-700">
-                        Contact
+                       Expected Salary
                       </label>
                       <input
                         type="text"
-                        id="contact"
+                        id="expectedSalary"
                         autoComplete="given-name"
                         {...register('expectedSalary')}
                         className={`mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md form-control ${errors?.expectedSalary ? 'is-invalid' : ''}`}
@@ -147,7 +147,7 @@ const Apply = ({ history,location }) => {
                     </div>
 
                     <div className="col-span-6 sm:col-span-3">
-                      <label htmlFor="first-name" className="block text-sm font-medium text-gray-700">
+                      <label htmlFor="github-name" className="block text-sm font-medium text-gray-700">
                         GitHub
                       </label>
                       <input
@@ -161,7 +161,7 @@ const Apply = ({ history,location }) => {
                       <div className="text-red-500">{errors?.gitHub?.message}</div>
                     </div>
                     <div className="col-span-6 sm:col-span-3">
-                      <label htmlFor="first-name" className="block text-sm font-medium text-gray-700">
+                      <label htmlFor="linkedIn-name" className="block text-sm font-medium text-gray-700">
                        LinkedInProfile
                       </label>
                       <input

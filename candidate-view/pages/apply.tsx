@@ -27,8 +27,8 @@ const Apply: NextPage = () => {
     currentSalary: Yup.string().required('Current CTC is required'),
     expectedSalary: Yup.string().required('Expected CTC is required'),
     noticePeriod: Yup.string().required('NoticePeriod is required'),
-    linkedInProfile: Yup.string().required('NoticePeriod is required'),
-    gitHub: Yup.string().required('NoticePeriod is required'),
+    linkedInProfile: Yup.string().required('LinkedIn is required'),
+    gitHub: Yup.string().required('Github is required'),
     email: Yup.string()
       .required('Email is required')
       .email('Email is invalid'),
@@ -97,7 +97,7 @@ const Apply: NextPage = () => {
                       />
                       <div className="text-red-500">{errors.contact?.message}</div>
                     </div>
-                    <div className="col-span-6 sm:col-span-4">
+                    <div className="col-span-6 sm:col-span-3">
                       <label htmlFor="email-address" className="block text-sm font-medium text-gray-700">
                         Email address
                       </label>
@@ -126,7 +126,7 @@ const Apply: NextPage = () => {
                     </div>
                     <div className="col-span-6 sm:col-span-3">
                       <label htmlFor="first-name" className="block text-sm font-medium text-gray-700">
-                        Contact
+                        Expected Salary
                       </label>
                       <input
                         type="text"

@@ -118,9 +118,7 @@ const getButtonName = (candidate) => {
 	return addDetailsButton;
 }
 
-$(document).ready(function () {
-  console.log("ready!");
-
+function addButtonIfCorrectPage (){
   const { linkedInProfile } = getDetailsOfCandidate();
 
   var checkExist = setInterval(function () {
@@ -148,4 +146,12 @@ $(document).ready(function () {
       clearInterval(checkExist);
     }
   }, 100);
+}
+
+$(document).ready(function () {
+  console.log("ready!");
+  window.addEventListener('locationchange', function(){
+    console.log('location changed!');
+})
+  addButtonIfCorrectPage();
 });

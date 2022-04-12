@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="../assets/styles//bootstrap.min.css">
+  <link rel="stylesheet" href="../assets/styles/main.css">
+  <script src="../assets/js/jquery.min.js"></script>
+  <!-- <script src="../assets/js/bootstrap.min.js"></script> -->
+  <script src="./popup.js"></script>
+</head>
+<body>
+  
+<div class="container form-container">
+    <div class="row" id="addingFormView">
+      <div class="offset-lg-2 col-lg-8 col-sm-8 col-8 border rounded main-section">
+        <h3 class="text-center text-inverse">Add candidate info</h3>
+        <hr>
+        <form class="container" id="needs-validation" novalidate>
+          <div class="row">
+            <div class="col-md-6 col-sm-12 col-12">
+              <div class="form-group">
+                <label class="text-inverse" for="email">Email</label>
+                <input type="email" class="form-control" id="email" placeholder="Email" required>
+                <div class="invalid-feedback">
+                  Please provide a valid Email.
+                </div>
+              </div>  
+            </div>
+            <div class="col-lg-6 col-sm-6 col-12">
+              <div class="form-group">
+                <label class="text-inverse" for="name">Name</label>
+                <input type="text" class="form-control" id="name" placeholder="John Dow" required>
+                <div class="invalid-feedback">
+                  Please provide a valid name.
+                </div>
+              </div>  
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-6 col-sm-6 col-12">
+               <div class="form-group">
+                <label class="text-inverse" for="currentSalary">Current CTC</label>
+                <input type="number" class="form-control" id="currentSalary" placeholder="10000" value="100000" required>
+                <div class="invalid-feedback">
+                  Please provide a valid ctc in number example 120000.
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6 col-sm-6 col-12">
+              <div class="form-group">
+                <label class="text-inverse" for="expectedSalary">Expected CTC</label>
+                <input type="number" class="form-control" id="expectedSalary" placeholder="200000" value="" required>
+                <div class="invalid-feedback">
+                  Please provide a valid ctc in number example 120000.
+                </div>
+              </div>  
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-6 col-sm-6 col-12">
+              <div class="form-group">
+                <label class="text-inverse" for="noticePeriod">Notice Period</label>
+                <input type="text" class="form-control" id="noticePeriod" placeholder="10 days / immedite" required>
+                <div class="invalid-feedback">
+                  Please provide a valid Notice Period example 20days.
+                </div>
+              </div>  
+            </div>
+            <div class="col-lg-6 col-sm-6 col-12">
+              <div class="form-group">
+                <label class="text-inverse" for="contact">Contact Number</label>
+                <input type="text" class="form-control" id="contact" placeholder="99XXXXXXXX" required>
+                <div class="invalid-feedback">
+                  Please provide a phone number.
+                </div>
+              </div>  
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-6 col-sm-6 col-12">
+              <div class="form-group">
+                <label class="text-inverse" for="linkedInProfile">LinkedIn Profile</label>
+                <input type="text" class="form-control" id="linkedInProfile" placeholder="jone-dowe-1112332" required>
+                <div class="invalid-feedback">
+                  Please provide a valid linkedInProfile.
+                </div>
+              </div>  
+            </div>
+            <div class="col-lg-6 col-sm-6 col-12">
+              <div class="form-group">
+                <label class="text-inverse" for="gitHub">GitHub Profile</label>
+                <input type="text" class="form-control" id="gitHub" placeholder="john123" required>
+                <div class="invalid-feedback">
+                  Please provide a valid gitHub.
+                </div>
+              </div>  
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-lg-12 col-sm-12 col-12 text-center">
+                <button class="btn btn-info" id="submitButton" type="submit">Submit</button>
+                <button class="btn btn-info d-none" id="loadingSubmitButton" type="button" disabled>
+                  <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                  Submitting...
+                </button>
+            </div>
+           
+          </div>  
+        </form>
+      </div>
+    </div> 
+    <div class="row d-none" id="successView">
+      <div class="offset-lg-2 col-lg-8 col-sm-8 col-8 border rounded main-section">
+        <h3 class="text-center text-inverse">Candidate added Scussfully</h3>
+        <hr>
+        <div class="alert alert-info" role="alert">
+            <div>
+              Hey,
+            </div>
+            <div>
+              Thanks for your interest in joining the 
+            </div>
+            <div>
+              engineering team here at Thinkify.
+            </div>
+            <div>
+              The first step to getting started is completing our short Quiz.
+            </div>
+            <div>
+              It usually takes around 30 minutes to complete.
+            </div>
+            <div>
+              You can get started here:
+            </div>
+            <div>
+              <a href="https://triplebyte.com/wt/thinkify/start/1Pq2hNl8qni/71104">https://triplebyte.com/wt/thinkify/start/1Pq2hNl8qni/71104</a>
+            </div>
+            <div>
+              We'll get back to you after you complete the quiz.
+            </div>
+        </div>
+        <hr>
+        <button class="btn btn-info" id="addMoreButton" type="button">Add more candidates</button>
+      </div>
+    </div>  
+    <div class="row d-none" id="errorView">
+      <div class="offset-lg-2 col-lg-8 col-sm-8 col-8 border rounded main-section">
+        <h3 class="text-center text-inverse">Candidate added Scussfully</h3>
+        <hr>
+        <div class="alert alert-info" role="alert">
+          <div class="alert alert-info" role="alert">
+            <div>
+              Hey,
+            </div>
+            <div>
+              Thanks for your interest in joining the 
+            </div>
+            <div>
+              engineering team here at Thinkify.
+            </div>
+            <div>
+              The first step to getting started is completing our short Quiz.
+            </div>
+            <div>
+              It usually takes around 30 minutes to complete.
+            </div>
+            <div>
+              You can get started here:
+            </div>
+            <div>
+              <a href="https://triplebyte.com/wt/thinkify/start/1Pq2hNl8qni/71104">https://triplebyte.com/wt/thinkify/start/1Pq2hNl8qni/71104</a>
+            </div>
+            <div>
+              We'll get back to you after you complete the quiz.
+            </div>
+        </div>
+        </div>
+
+      </div>
+    </div>    
+</div>
+        
+</body>
+</html>

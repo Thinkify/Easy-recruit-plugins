@@ -45,7 +45,7 @@ function showTestResults(candidateInfo) {
 
   var iframe = document.createElement("iframe");
   document.getElementById("iframe-wrapper").appendChild(iframe);
-  iframe.src = `https://sleepy-meadow-81233.herokuapp.com/`;
+  iframe.src = `http://localhost:3000/?find=${candidateInfo}&hf=true`;
   $("#demo-modal-popup").addClass("modal__target");
   $("#demo-modal-popup").click(hideMainPopupFirst);
 }
@@ -70,7 +70,9 @@ const getDetailsOfCandidate = () => {
 
 const getCandiateLinkedInProfile = (thinkifybutton) => {
 	console.log('thinkifybutton:',thinkifybutton);
-	return 'dipanshutyagi860@gmail.com';
+	const url = thinkifybutton.closest('.entity-result__item').find('.app-aware-link')[0].href;
+	linkedInProfile = url.slice('https://www.linkedin.com/in/'.length, url.indexOf('?'));
+	return linkedInProfile;
 }
 
 function showMainPopupFirst(event) {
@@ -81,7 +83,6 @@ function showMainPopupFirst(event) {
 		console.log('this:',this);
 		console.log('event:',event);
 		const candidateLinkedIn = getCandiateLinkedInProfile(isThinkifyEvent);
-	
 		// create a model append it and show iframe on it with the candiate info 
 		showTestResults(candidateLinkedIn);
 

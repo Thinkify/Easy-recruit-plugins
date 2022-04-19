@@ -45,7 +45,7 @@ function showTestResults(candidateInfo) {
 
   var iframe = document.createElement("iframe");
   document.getElementById("iframe-wrapper").appendChild(iframe);
-  iframe.src = `http://localhost:3000/?find=${candidateInfo}&hf=true`;
+  iframe.src = `https://sleepy-meadow-81233.herokuapp.com/?find=${candidateInfo}&hf=true`;
   $("#demo-modal-popup").addClass("modal__target");
   $("#demo-modal-popup").click(hideMainPopupFirst);
 }

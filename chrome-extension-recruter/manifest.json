@@ -23,7 +23,7 @@
     },
     "content_scripts": [{
         "js": ["lib/jquery.js","lib/common.js","instahyreForeground.js"],
-        "css": ["styles.css"],
+        "css": ["instahyreForeground.css"],
         "matches": ["https://www.instahyre.com/employer/candidates/*"]
     },{
         "js": ["lib/jquery.js","lib/common.js","linkedinForeground.js"],

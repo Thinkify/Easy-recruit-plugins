@@ -7,6 +7,12 @@ const getContentJson = (model) => {
 
   const name = $(model[0]).find(".candidate-name span")[0]?.innerHTML;
   const email = $($(model[0]).find(".info")[4]).find("a")[0]?.innerHTML;
+  let currentSalary = $($(model[0]).find(".info")[3]).find("span")[1]
+    ?.innerHTML;
+  console.log(currentSalary);
+  if (currentSalary) {
+    currentSalary = currentSalary.split(" ")[0];
+  }
 
   let gitHub = $(model[0]).find(".social-github a")[0]?.href;
   if (gitHub) {
@@ -18,9 +24,9 @@ const getContentJson = (model) => {
     linkedInProfile = linkedInProfile.split("/")[4];
   }
 
-  let PhoneNumber = $($(model[0]).find(".info")[5]).find("span")[0]?.innerHTML;
-  if (PhoneNumber) {
-    PhoneNumber = PhoneNumber.split("/")[0];
+  let contact = $($(model[0]).find(".info")[5]).find("span")[0]?.innerHTML;
+  if (contact) {
+    contact = contact.split("/")[0];
   }
 
   const data = {
@@ -28,7 +34,8 @@ const getContentJson = (model) => {
     gitHub,
     linkedInProfile,
     email,
-    PhoneNumber,
+    contact,
+    currentSalary,
   };
   console.log(data);
   return data;
@@ -71,7 +78,7 @@ const showModal = async () => {
     if (response.message === "User not found") {
       url = `https://sleepy-meadow-81233.herokuapp.com/add?${params}`;
     } else {
-      url = `https://sleepy-meadow-81233.herokuapp.com/?find=${response.email}`;
+      url = `https://sleepy-meadow-81233.herokuapp.com/?find=${response.candidate.email}&hf=true`;
     }
     iframe.src = url;
     $("#demo-modal-popup").addClass("modal__target");

@@ -3,6 +3,7 @@
   window.addEventListener(
     "load",
     function () {
+      const BASE_URL = "https://shortline-be.herokuapp.com/api/v1/candidates";
       var form = document.getElementById("needs-validation");
       var submitButton = $("#submitButton");
       var loadingSubmitButton = $("#loadingSubmitButton");
@@ -10,17 +11,17 @@
       var successView = $("#successView");
       var errorView = $("#errorView");
 
-      var resetForm = function(){
-               $("#name").val('')
-               $("#email").val('')
-               $("#linkedInProfile").val('')
-               $("#gitHub").val('')
-               $("#contact").val('')
-               $("#currentSalary").val('')
-              $("#expectedSalary").val('')
-              $("#noticePeriod").val('')
-              $('#needs-validation').removeClass('was-validated')
-      }
+      var resetForm = function () {
+        $("#name").val("");
+        $("#email").val("");
+        $("#linkedInProfile").val("");
+        $("#gitHub").val("");
+        $("#contact").val("");
+        $("#currentSalary").val("");
+        $("#expectedSalary").val("");
+        $("#noticePeriod").val("");
+        $("#needs-validation").removeClass("was-validated");
+      };
 
       var startLoading = function () {
         submitButton.addClass("d-none");
@@ -76,7 +77,7 @@
               noticePeriod: $("#noticePeriod").val(),
             };
 
-            fetch("http://localhost:8081/candidates/addcandidate", {
+            fetch(BASE_URL + "/addcandidate", {
               method: "POST", // or 'PUT'
               headers: {
                 "Content-Type": "application/json",
@@ -88,7 +89,7 @@
               .then((data) => {
                 console.log("Success:", data);
                 showSuccessForm();
-                $("#addMoreButton").click(function(){
+                $("#addMoreButton").click(function () {
                   showFormOnly();
                   resetForm();
                 });

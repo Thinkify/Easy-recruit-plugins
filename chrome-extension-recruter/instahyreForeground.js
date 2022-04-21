@@ -78,7 +78,7 @@ const showModal = async () => {
     if (response.message === "User not found") {
       url = `https://sleepy-meadow-81233.herokuapp.com/add?${params}`;
     } else {
-      url = `https://sleepy-meadow-81233.herokuapp.com/?find=${response.candidate.email}&hf=true`;
+      url = `https://sleepy-meadow-81233.herokuapp.com/?find=${response?.candidate?.email}&hf=true`;
     }
     iframe.src = url;
     $("#demo-modal-popup").addClass("modal__target");

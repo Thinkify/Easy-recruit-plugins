@@ -1,23 +1,29 @@
 console.log("Inside  myInstahyreScript content script");
 
-const getContentJson = async (model) => {
-  // debugger;
-  const name = $(model[0]).find(".candidate-name span")[0].innerHTML;
-  // const gitHub = $(model[0]).find('.social-github a')[0].href;
-  // const linkedin = $(model[0]).find('.social-linkedin a')[0].href;
-  const PhoneNumber = $($(model[0]).find(".info")[5]).find("span")[0].innerHTML;
-  const email = $($(model[0]).find(".info")[4]).find("span")[0].innerHTML;
-  // const linkedInProfile = linkedin.split('/');
-  const data = { name, PhoneNumber, email };
-  // const data = await getDetailsByAny({
-  //   name,
-  //   gitHub,
-  //   linkedInProfile,
-  //   email,
-  // });
+const getContentJson = (model) => {
+  if(!model.length){
+    return null;
+  }
+  const name = $(model[0]).find(".candidate-name span")[0]?.innerHTML;
+  let gitHub = $(model[0]).find(".social-github a")[0]?.href;
+  gitHub = gitHub?.split('/')[3];
+  let linkedInProfile = $(model[0]).find(".social-linkedin a")[0]?.href;
+  let PhoneNumber = $($(model[0]).find(".info")[5]).find("span")[0]?.innerHTML;
+  const email = $($(model[0]).find(".info")[4]).find("a")[0]?.innerHTML;
+  linkedInProfile = linkedin.split("/")[4];
+  PhoneNumber = PhoneNumber.split('/')[0]
+
+  const data = {
+    name,
+    gitHub,
+    linkedInProfile,
+    email,
+    phoneNumber,
+  };
   console.log(data);
   return data;
 };
+
 
 const button = `<div class="info-button" id="thinkify-button">
 <label>
@@ -41,10 +47,16 @@ function hideModal() {
   $("#iframe-wrapper").html("");
 }
 
-function showModal(candidateInfo) {
+const showModal =  async (candidateInfo) => {
   var iframe = document.createElement("iframe");
   document.getElementById("iframe-wrapper").appendChild(iframe);
-  iframe.src = `https://sleepy-meadow-81233.herokuapp.com/?find=yatinkathuria74@gmail.com`;
+  const model = $(".application-modal-wrap");
+  const abstractedData =  getContentJson(model);
+
+  const {email = 'mailashwink@gmail.com'} = await getDetailsByAny(abstractedData);
+
+  const url = `https://sleepy-meadow-81233.herokuapp.com/?find=${email}`;
+  iframe.src = url;
   $("#demo-modal-popup").addClass("modal__target");
   $("#demo-modal-popup").click(hideModal);
 }
@@ -52,7 +64,7 @@ function showModal(candidateInfo) {
 function handleThinkifyButtonClick(event) {
   event.preventDefault();
   event.stopPropagation();
-  showModal("amangautam72");
+  showModal();
 }
 
 function addButtonIfCorrectPage() {
@@ -74,10 +86,7 @@ $(document).ready(function () {
     e.stopPropagation();
     const id = setInterval(function () {
       if ($(".application-modal-wrap").length) {
-        const model = $(".application-modal-wrap");
-        getContentJson(model);
         addButtonIfCorrectPage();
-
         clearInterval(id);
       }
     }, 500);

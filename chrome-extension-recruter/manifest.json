@@ -1,8 +1,8 @@
 {
     // Comments are accepted in the manifest, even though it is JSON.
     "manifest_version": 3,
-    "name": "Thinkify Candidate",
-    "description": "A candatade help plugin to find better jobs for them self",
+    "name": "Thinkify Recruter",
+    "description": "A Recruter help plugin to find better jobs for them self",
     "version": "0.0.1",
     "icons": {
         "16": "logo/logo-16.png",

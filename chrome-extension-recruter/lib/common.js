@@ -30,7 +30,8 @@ const getDetailsByLinkedInId = (linkedINProfile = "") => {
 
 const getDetailsByAny = (reqObject) => {
   return new Promise((resolve, reject) => {
-    const urlParams = createObjectParams(reqObject);
+	  var {email} = reqObject;
+    const urlParams = createObjectParams({email});
     fetch(`${BASE_URL}/getCandidateByAny?${urlParams}`)
       .then((response) => response.json())
       .then((data) => {

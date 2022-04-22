@@ -50,27 +50,28 @@ const button = `<div class="info-button" id="thinkify-button">
 <span class="action-checked ng-scope" tooltip=""></span>
 </div>`;
 
-const mainPopup = `<div id="demo-modal-popup" class="my_modal">
-	<div class="modal__content">
-		<div id='iframe-wrapper'>
-		</div>
-		<a href="#" class="modal__close">&times;</a>
-	</div>
+const popupSidebar = `
+<div id="thinkify_modal">
+  <div id="body-overlay"></div>
+  <nav class="real-menu" role="navigation">
+    <div id='iframe-wrapper'>
+    </div>
+    <a href="#" class="modal__close" id="modal__close">&times;</a>
+  </nav>
 </div>`;
 
-function hideModal() {
-  $("#demo-modal-popup").removeClass("modal__target");
-  $("#iframe-wrapper").html("");
-}
-
-const showModal = async () => {
+async function openSidebar(event) {
+  event.preventDefault();
+  event.stopPropagation();
+  const element = document.getElementById("thinkify_modal");
+  element.classList.add("menu-open");
   var iframe = document.createElement("iframe");
+  // iframe.setAttribute("scrolling", "no");
   document.getElementById("iframe-wrapper").appendChild(iframe);
   const model = $(".application-modal-wrap");
   const userData = getContentJson(model);
 
   if (userData) {
-    const temp = "mailashwink@gmail.com";
     const response = await getDetailsByAny(userData);
     let url = "";
     const params = createObjectParams(userData);
@@ -81,15 +82,14 @@ const showModal = async () => {
       url = `https://sleepy-meadow-81233.herokuapp.com/?find=${response?.candidate?.email}&hf=true`;
     }
     iframe.src = url;
-    $("#demo-modal-popup").addClass("modal__target");
-    $("#demo-modal-popup").click(hideModal);
+    $("#modal__close").click(closeSidebar);
   }
-};
+}
 
-function handleThinkifyButtonClick(event) {
-  event.preventDefault();
-  event.stopPropagation();
-  showModal();
+function closeSidebar() {
+  const element = document.getElementById("thinkify_modal");
+  element.classList.remove("menu-open");
+  $("#iframe-wrapper").html("");
 }
 
 function addButtonIfCorrectPage() {
@@ -99,8 +99,13 @@ function addButtonIfCorrectPage() {
   );
 
   setTimeout(() => {
-    $("#thinkify-button").click(handleThinkifyButtonClick);
-    $("body").append(mainPopup);
+    $("body").append(popupSidebar);
+    document
+      .getElementById("thinkify-button")
+      .addEventListener("click", openSidebar);
+    document
+      .getElementById("body-overlay")
+      .addEventListener("click", closeSidebar);
   }, 0);
 }
 

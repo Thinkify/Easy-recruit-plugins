@@ -1,6 +1,6 @@
 let instance = null;
 class Candidate {
-  constructor(name = "", linkedInProfile = "", data = null) {
+  constructor(name = '', linkedInProfile = '', data = null) {
     if (!instance) {
       instance = this;
     }
@@ -31,23 +31,32 @@ let candidateInfo = new Candidate();
 
 const vetButton = `<a href="https://triplebyte.com/wt/thinkify/start/1Pq2hNl8qni/71104" target="_blank"><div class="vet-button">Vet Yourself</div></a>`;
 
-const mainPopup = `<div id="demo-modal-popup" class="modal">
-	<div class="modal__content">
-		<div id='iframe-wrapper'>
-		</div>
-		<a href="#" class="modal__close">&times;</a>
-	</div>
+const popupSidebar = `
+<div id="thinkify_modal">
+  <div id="body-overlay"></div>
+  <nav class="real-menu" role="navigation">
+    <div id='iframe-wrapper'>
+    </div>
+    <a href="#" class="modal__close" id="modal__close">&times;</a>
+  </nav>
 </div>`;
 
-const routeToJoin = "/apply";
+const routeToJoin = '/apply';
 
 function showTestResults(candidateInfo) {
-
-  var iframe = document.createElement("iframe");
-  document.getElementById("iframe-wrapper").appendChild(iframe);
+  console.log(
+    $('body'),
+    document.getElementsByTagName('body'),
+    document.getElementsByTagName('body')
+  );
+  document.getElementsByTagName('body')[0].classList.add('hiddenScroll');
+  // $('body').classList.add('hiddenScroll');
+  const element = document.getElementById('thinkify_modal');
+  element.classList.add('menu-open');
+  var iframe = document.createElement('iframe');
+  document.getElementById('iframe-wrapper').appendChild(iframe);
   iframe.src = `https://sleepy-meadow-81233.herokuapp.com/?find=${candidateInfo}&hf=true`;
-  $("#demo-modal-popup").addClass("modal__target");
-  $("#demo-modal-popup").click(hideMainPopupFirst);
+  $('#modal__close').click(closeSidebar);
 }
 
 const getDetailsOfCandidate = () => {
@@ -56,9 +65,9 @@ const getDetailsOfCandidate = () => {
   );
 
   const linkedInProfile = contentExtracted?.included[0]?.publicIdentifier;
-  const firstName = contentExtracted?.included[0]?.firstName || "";
-  const lastName = contentExtracted?.included[0]?.lastName || "";
-  const name = firstName + " " + lastName;
+  const firstName = contentExtracted?.included[0]?.firstName || '';
+  const lastName = contentExtracted?.included[0]?.lastName || '';
+  const name = firstName + ' ' + lastName;
 
   candidateInfo.setDetails((linkedInProfile, name));
 
@@ -69,30 +78,35 @@ const getDetailsOfCandidate = () => {
 };
 
 const getCandiateLinkedInProfile = (thinkifybutton) => {
-	console.log('thinkifybutton:',thinkifybutton);
-	const url = thinkifybutton.closest('.entity-result__item').find('.app-aware-link')[0].href;
-	linkedInProfile = url.slice('https://www.linkedin.com/in/'.length, url.indexOf('?'));
-	return linkedInProfile;
-}
+  console.log('thinkifybutton:', thinkifybutton);
+  const url = thinkifybutton
+    .closest('.entity-result__item')
+    .find('.app-aware-link')[0].href;
+  linkedInProfile = url.slice(
+    'https://www.linkedin.com/in/'.length,
+    url.indexOf('?')
+  );
+  return linkedInProfile;
+};
 
 function showMainPopupFirst(event) {
-	// find the element which clicked we have this and event
-	const isThinkifyEvent = $(event.target).closest('.thinkify-info')
-	if(isThinkifyEvent.length){
-		event.stopPropagation();
-		console.log('this:',this);
-		console.log('event:',event);
-		const candidateLinkedIn = getCandiateLinkedInProfile(isThinkifyEvent);
-		// create a model append it and show iframe on it with the candiate info 
-		showTestResults(candidateLinkedIn);
-
-
-	}
+  // find the element which clicked we have this and event
+  const isThinkifyEvent = $(event.target).closest('.thinkify-info');
+  if (isThinkifyEvent.length) {
+    event.stopPropagation();
+    console.log('this:', this);
+    console.log('event:', event);
+    const candidateLinkedIn = getCandiateLinkedInProfile(isThinkifyEvent);
+    // create a model append it and show iframe on it with the candiate info
+    showTestResults(candidateLinkedIn);
+  }
 }
 
-function hideMainPopupFirst() {
-  $("#demo-modal-popup").removeClass("modal__target");
-  $("#iframe-wrapper").html("");
+function closeSidebar() {
+  const element = document.getElementById('thinkify_modal');
+  element.classList.remove('menu-open');
+  $('#iframe-wrapper').html('');
+  document.getElementsByTagName('body')[0].classList.remove('hiddenScroll');
 }
 
 const getContentJson = async (linkedInProfile) => {
@@ -110,9 +124,9 @@ const getButtonName = (candidate) => {
   }
 
   const buttonName = {
-    1: "Check Info",
-    2: "Vet yourself",
-    3: "Next Step",
+    1: 'Check Info',
+    2: 'Vet yourself',
+    3: 'Next Step',
   };
   const addDetailsButton = `<button class="thinkify-info artdeco-button artdeco-button--2 artdeco-button--secondary ember-view">
 		<span class="artdeco-button__text">
@@ -123,50 +137,59 @@ const getButtonName = (candidate) => {
 };
 
 function addButtonIfCorrectPage() {
+  // get all buttons with message or connect written
+  // on click show the pop by making the api call with that current api call of the user and display info
 
-	// get all buttons with message or connect written
-	// on click show the pop by making the api call with that current api call of the user and display info
-	
-	let allButtonsToClick = document.getElementsByClassName('artdeco-button artdeco-button--2 artdeco-button--secondary ember-view');
-	allButtonsToClick = Array(...allButtonsToClick).filter( it => it?.innerHTML?.includes('Message')|| it?.innerHTML?.includes('Connect')|| it?.innerHTML?.includes('Follow') );
-	console.log('allButtonsToClick:',allButtonsToClick);
-	allButtonsToClick.forEach(buttons => {
-		// add Thinkify button for all 
-		const model = $(buttons).closest('.entity-result__actions.entity-result__divider');
+  let allButtonsToClick = document.getElementsByClassName(
+    'artdeco-button artdeco-button--2 artdeco-button--secondary ember-view'
+  );
+  allButtonsToClick = Array(...allButtonsToClick).filter(
+    (it) =>
+      it?.innerHTML?.includes('Message') ||
+      it?.innerHTML?.includes('Connect') ||
+      it?.innerHTML?.includes('Follow')
+  );
+  console.log('allButtonsToClick:', allButtonsToClick);
+  allButtonsToClick.forEach((buttons) => {
+    // add Thinkify button for all
+    const model = $(buttons).closest(
+      '.entity-result__actions.entity-result__divider'
+    );
 
-		function appendButton(model, buttonView) {
-			(newdiv2 = document.createElement("div")),
-			  (existingdiv1 = document.getElementById("foo"));
-			model.append(buttonView, [newdiv2, existingdiv1]);
-		}
+    function appendButton(model, buttonView) {
+      (newdiv2 = document.createElement('div')),
+        (existingdiv1 = document.getElementById('foo'));
+      model.append(buttonView, [newdiv2, existingdiv1]);
+    }
 
-		const buttonToShow = getButtonName('');
-        appendButton(model, buttonToShow);
-	});
-
-	setTimeout(() => {
-
-		function appendModal(buttonView) {
-			(newdiv2 = document.createElement("div")),
-			  (existingdiv1 = document.getElementById("foo"));
-			$('body').append(buttonView, [newdiv2, existingdiv1]);
-		}
-
-		appendModal(mainPopup)
-		
-		$(window).click(showMainPopupFirst);
-	  }, 0);
-
-}
-
-$(document).ready(function () {
-  console.log("ready!");
-
-  window.addEventListener("locationchange", function () {
-    console.log("location changed!");
+    const buttonToShow = getButtonName('');
+    appendButton(model, buttonToShow);
   });
 
   setTimeout(() => {
-	addButtonIfCorrectPage();
-}, 2000);
+    function appendSidebar(buttonView) {
+      (newdiv2 = document.createElement('div')),
+        (existingdiv1 = document.getElementById('foo'));
+      $('body').append(buttonView, [newdiv2, existingdiv1]);
+      document
+        .getElementById('body-overlay')
+        .addEventListener('click', closeSidebar);
+    }
+
+    appendSidebar(popupSidebar);
+
+    $(window).click(showMainPopupFirst);
+  }, 0);
+}
+
+$(document).ready(function () {
+  console.log('ready!');
+
+  window.addEventListener('locationchange', function () {
+    console.log('location changed!');
+  });
+
+  setTimeout(() => {
+    addButtonIfCorrectPage();
+  }, 500);
 });

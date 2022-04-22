@@ -23,11 +23,11 @@
     },
     "content_scripts": [{
         "js": ["lib/jquery.js","lib/common.js","instahyreForeground.js"],
-        "css": ["instahyreForeground.css"],
+        "css": ["commom.css","instahyreForeground.css"],
         "matches": ["https://www.instahyre.com/employer/candidates/*"]
     },{
         "js": ["lib/jquery.js","lib/common.js","linkedinForeground.js"],
-        "css": ["styles.css"],
+        "css": ["commom.css","styles.css"],
         "matches": ["https://www.linkedin.com/jobs/*","https://www.linkedin.com/search/results/*","https://sleepy-meadow-81233.herokuapp.com/*"]
     }],
     "web_accessible_resources": [

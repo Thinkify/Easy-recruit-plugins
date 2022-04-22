@@ -138,13 +138,8 @@
 
 .modal__footer {
   text-align: right;
-  a {
-    color: #585858;
-  }
-  i {
-    color: #d02d2c;
-  }
 }
+
 .modal__close {
   position: absolute;
   top: 10px;
@@ -153,15 +148,10 @@
   text-decoration: none;
 }
 
-#iframe-wrapper{
-  height: 600px;
-}
-
-iframe{
-  height: 100%;
-  width: 100%;
-}
-
 .thinkify-button{
   position:absolute
+}
+
+.hiddenScroll {
+  overflow-y: hidden !important;
 }

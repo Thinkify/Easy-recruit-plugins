@@ -43,20 +43,23 @@ const popupSidebar = `
 
 const routeToJoin = '/apply';
 
-function showTestResults(candidateInfo) {
-  console.log(
-    $('body'),
-    document.getElementsByTagName('body'),
-    document.getElementsByTagName('body')
-  );
-  document.getElementsByTagName('body')[0].classList.add('hiddenScroll');
-  // $('body').classList.add('hiddenScroll');
+function openSidebar() {
   const element = document.getElementById('thinkify_modal');
   element.classList.add('menu-open');
-  var iframe = document.createElement('iframe');
-  document.getElementById('iframe-wrapper').appendChild(iframe);
-  iframe.src = `https://sleepy-meadow-81233.herokuapp.com/?find=${candidateInfo}&hf=true`;
   $('#modal__close').click(closeSidebar);
+}
+
+function addIframeToSidebar(src) {
+  const iframe = document.createElement('iframe');
+  document.getElementById('iframe-wrapper').appendChild(iframe);
+  iframe.src = src;
+}
+
+function showTestResults(candidateInfo) {
+  openSidebar();
+  document.getElementsByTagName('body')[0].classList.add('hiddenScroll');
+  const src = `https://sleepy-meadow-81233.herokuapp.com/?find=${candidateInfo}&hf=true`;
+  addIframeToSidebar(src);
 }
 
 const getDetailsOfCandidate = () => {
@@ -94,8 +97,6 @@ function showMainPopupFirst(event) {
   const isThinkifyEvent = $(event.target).closest('.thinkify-info');
   if (isThinkifyEvent.length) {
     event.stopPropagation();
-    console.log('this:', this);
-    console.log('event:', event);
     const candidateLinkedIn = getCandiateLinkedInProfile(isThinkifyEvent);
     // create a model append it and show iframe on it with the candiate info
     showTestResults(candidateLinkedIn);
@@ -182,6 +183,48 @@ function addButtonIfCorrectPage() {
   }, 0);
 }
 
+function handleShowRecommandedCandidates(e) {
+  e.stopPropagation();
+  openSidebar();
+  const src = 'http://localhost:3000/recommanded/candidates';
+  addIframeToSidebar(src);
+}
+
+function addShowRecommandedButton() {
+  let count = 0;
+  const id = setInterval(() => {
+    const search_container = document.querySelector(
+      '.search-results-container'
+    );
+    count++;
+    if (count === 10) {
+      clearInterval(id);
+    }
+
+    if (search_container) {
+      clearInterval(id);
+      console.log('helo in search');
+
+      const h2_element = search_container.querySelector('h2');
+      const clonedNode = h2_element.cloneNode(true);
+      h2_element.remove();
+
+      const container_div = document.createElement('div');
+      container_div.classList.add('thinkify_wrapper');
+
+      const button = document.createElement('button');
+      button.textContent = 'Show Candidates';
+      button.addEventListener('click', handleShowRecommandedCandidates);
+
+      container_div.append(clonedNode);
+      container_div.append(button);
+
+      search_container.prepend(container_div);
+      console.log(search_container, h2_element, container_div);
+    }
+  }, 200);
+}
+
 $(document).ready(function () {
   console.log('ready!');
 
@@ -191,5 +234,6 @@ $(document).ready(function () {
 
   setTimeout(() => {
     addButtonIfCorrectPage();
+    addShowRecommandedButton();
   }, 500);
 });

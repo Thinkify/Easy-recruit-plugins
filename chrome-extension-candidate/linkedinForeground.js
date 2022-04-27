@@ -58,7 +58,7 @@ function showTestResults() {
   } else if (data?.linkedInProfile) {
     iframe.src = `${PRODUCTION_URL}/take-test`;
   } else {
-    iframe.src = `${PRODUCTION_URL}/add/?linkedInProfile=${linkedInProfile}&name=${name}`;
+    iframe.src = `${PRODUCTION_URL}/apply/?linkedInProfile=${linkedInProfile}&name=${name}`;
   }
 }
 

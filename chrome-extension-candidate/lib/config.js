@@ -1,4 +1,4 @@
-const CONFIG = {
+var CONFIG = {
   PRODUCTION_URL: 'http://short-line-c.herokuapp.com',
   DEVELOPMENT_URL: 'http://localhost:3000',
   B_DEV_URL: 'https://shortline-be.herokuapp.com/api/v1/candidates',

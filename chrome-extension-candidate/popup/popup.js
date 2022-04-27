@@ -1,5 +1,3 @@
-const { B_PROD_URL } = require('../config');
-
 (function () {
   'use strict';
   window.addEventListener(
@@ -78,7 +76,7 @@ const { B_PROD_URL } = require('../config');
               noticePeriod: $('#noticePeriod').val(),
             };
 
-            fetch(`${B_PROD_URL}/candidates/addcandidate`, {
+            fetch(`${CONFIG.B_PROD_URL}/candidates/addcandidate`, {
               method: 'POST', // or 'PUT'
               headers: {
                 'Content-Type': 'application/json',

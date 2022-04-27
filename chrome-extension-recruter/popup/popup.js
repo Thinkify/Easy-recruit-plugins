@@ -1,11 +1,8 @@
-const { B_PROD_URL } = require('../config');
-
 (function () {
   'use strict';
   window.addEventListener(
     'load',
     function () {
-      // const BASE_URL = "https://shortline-be.herokuapp.com/api/v1/candidates";
       var form = document.getElementById('needs-validation');
       var submitButton = $('#submitButton');
       var loadingSubmitButton = $('#loadingSubmitButton');
@@ -79,7 +76,7 @@ const { B_PROD_URL } = require('../config');
               noticePeriod: $('#noticePeriod').val(),
             };
 
-            fetch(B_PROD_URL + '/addcandidate', {
+            fetch(CONFIG.B_PROD_URL + '/addcandidate', {
               method: 'POST', // or 'PUT'
               headers: {
                 'Content-Type': 'application/json',

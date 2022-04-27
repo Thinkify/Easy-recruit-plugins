@@ -1,4 +1,4 @@
-module.exports = {
+var CONFIG = {
   PRODUCTION_URL: 'https://sleepy-meadow-81233.herokuapp.com',
   DEVELOPMENT_URL: 'http://localhost:3000',
   B_DEV_URL: 'https://shortline-be.herokuapp.com/api/v1/candidates',

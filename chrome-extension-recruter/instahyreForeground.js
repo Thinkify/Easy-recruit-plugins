@@ -1,7 +1,3 @@
-const { PRODUCTION_URL } = require('./config');
-
-console.log('Inside  myInstahyreScript content script');
-
 const getContentJson = (model) => {
   if (!model.length) {
     return null;
@@ -81,9 +77,9 @@ async function openSidebar(event) {
     const params = createObjectParams(userData);
     console.log('====', response);
     if (response.message === 'User not found') {
-      url = `${PRODUCTION_URL}/add?${params}`;
+      url = `${CONFIG.PRODUCTION_URL}/add?${params}`;
     } else {
-      url = `${PRODUCTION_URL}/?find=${response?.candidate?.email}&hf=true`;
+      url = `${CONFIG.PRODUCTION_URL}/?find=${response?.candidate?.email}&hf=true`;
     }
     iframe.src = url;
     $('#modal__close').click(closeSidebar);

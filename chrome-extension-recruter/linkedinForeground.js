@@ -1,5 +1,3 @@
-const { PRODUCTION_URL } = require('./config');
-
 let instance = null;
 class Candidate {
   constructor(name = '', linkedInProfile = '', data = null) {
@@ -60,7 +58,7 @@ function addIframeToSidebar(src) {
 function showTestResults(candidateInfo) {
   openSidebar();
   document.getElementsByTagName('body')[0].classList.add('hiddenScroll');
-  const src = `${PRODUCTION_URL}/?find=${candidateInfo}&hf=true`;
+  const src = `${CONFIG.PRODUCTION_URL}/?find=${candidateInfo}&hf=true`;
   addIframeToSidebar(src);
 }
 
@@ -188,7 +186,7 @@ function addButtonIfCorrectPage() {
 function handleShowRecommandedCandidates(e) {
   e.stopPropagation();
   openSidebar();
-  const src = `${PRODUCTION_URL}/recommanded/candidates`;
+  const src = `${CONFIG.PRODUCTION_URL}/recommanded/candidates`;
   addIframeToSidebar(src);
 }
 

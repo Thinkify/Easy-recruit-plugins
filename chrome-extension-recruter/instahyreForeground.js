@@ -68,8 +68,7 @@ async function openSidebar(event) {
   event.stopPropagation();
   const element = document.getElementById('thinkify_modal');
   element.classList.add('menu-open');
-  var iframe = document.createElement('iframe');
-  // iframe.setAttribute("scrolling", "no");
+  const iframe = document.createElement('iframe');
   document.getElementById('iframe-wrapper').appendChild(iframe);
   const model = $('.application-modal-wrap');
   const userData = getContentJson(model);

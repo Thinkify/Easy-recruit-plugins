@@ -1,35 +1,35 @@
 {
-    // Comments are accepted in the manifest, even though it is JSON.
-    "manifest_version": 3,
-    "name": "Thinkify Candidate",
-    "description": "A candatade help plugin to find better jobs for them self",
-    "version": "0.0.1",
-    "icons": {
-        "16": "logo/logo-16.png",
-        "48": "logo/logo-48.png",
-        "128": "logo/logo-128.png"
-    },
-    // "options_page": "settings/settings.html",
-    // "action": {
-    //     "default_title": "Chrome Addon v3 Starter",
-    //     "default_popup": "out/index.html"
-    // },
-    "permissions": ["tabs","storage"],
-    "host_permissions": [
-        "*://*/*"
-    ],
-    "background": {
-        "service_worker": "service-worker.js"
-    },
-    "content_scripts": [{
-        "js": ["lib/jquery.js","lib/common.js","linkedinForeground.js"],
-        "css": ["styles.css"],
-        "matches": ["https://www.linkedin.com/jobs/*"]
-    }],
-    "web_accessible_resources": [
-        {
-          "resources": [ "out/index.html", "popup/popup.html" ],
-          "matches": [ "https://www.linkedin.com/*","http://triplebyte.com/*" ]
-        }
-      ]
+  // Comments are accepted in the manifest, even though it is JSON.
+  "manifest_version": 3,
+  "name": "Thinkify Candidate",
+  "description": "A candatade help plugin to find better jobs for them self",
+  "version": "0.0.1",
+  "icons": {
+    "16": "logo/logo-16.png",
+    "48": "logo/logo-48.png",
+    "128": "logo/logo-128.png"
+  },
+  // "options_page": "settings/settings.html",
+  // "action": {
+  //     "default_title": "Chrome Addon v3 Starter",
+  //     "default_popup": "out/index.html"
+  // },
+  "permissions": ["tabs", "storage"],
+  "host_permissions": ["*://*/*"],
+  "background": {
+    "service_worker": "service-worker.js"
+  },
+  "content_scripts": [
+    {
+      "js": ["lib/jquery.js", "lib/common.js", "linkedinForeground.js"],
+      "css": ["common.css", "styles.css"],
+      "matches": ["https://www.linkedin.com/jobs/*"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["out/index.html", "popup/popup.html"],
+      "matches": ["https://www.linkedin.com/*", "http://triplebyte.com/*"]
+    }
+  ]
 }

@@ -58,7 +58,7 @@ function addIframeToSidebar(src) {
 function showTestResults(candidateInfo) {
   openSidebar();
   document.getElementsByTagName('body')[0].classList.add('hiddenScroll');
-  const src = `${CONFIG.PRODUCTION_URL}/?find=${candidateInfo}&hf=true`;
+  const src = `${getConfig().PRODUCTION_URL}/?find=${candidateInfo}&hf=true`;
   addIframeToSidebar(src);
 }
 
@@ -186,7 +186,7 @@ function addButtonIfCorrectPage() {
 function handleShowRecommandedCandidates(e) {
   e.stopPropagation();
   openSidebar();
-  const src = `${CONFIG.PRODUCTION_URL}/recommanded/candidates`;
+  const src = `${getConfig().PRODUCTION_URL}/recommanded/candidates`;
   addIframeToSidebar(src);
 }
 

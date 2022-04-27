@@ -1,3 +1,4 @@
+
 const getContentJson = (model) => {
   if (!model.length) {
     return null;
@@ -77,9 +78,9 @@ async function openSidebar(event) {
     const params = createObjectParams(userData);
     console.log('====', response);
     if (response.message === 'User not found') {
-      url = `${CONFIG.PRODUCTION_URL}/add?${params}`;
+      url = `${getConfig().PRODUCTION_URL}/add?${params}`;
     } else {
-      url = `${CONFIG.PRODUCTION_URL}/?find=${response?.candidate?.email}&hf=true`;
+      url = `${getConfig().PRODUCTION_URL}/?find=${response?.candidate?.email}&hf=true`;
     }
     iframe.src = url;
     $('#modal__close').click(closeSidebar);

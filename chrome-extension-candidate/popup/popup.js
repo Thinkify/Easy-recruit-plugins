@@ -76,7 +76,7 @@
               noticePeriod: $('#noticePeriod').val(),
             };
 
-            fetch(`${CONFIG.B_PROD_URL}/candidates/addcandidate`, {
+            fetch(`${getConfig().B_PROD_URL}/candidates/addcandidate`, {
               method: 'POST', // or 'PUT'
               headers: {
                 'Content-Type': 'application/json',

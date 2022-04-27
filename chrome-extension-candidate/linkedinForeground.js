@@ -52,11 +52,11 @@ function showTestResults() {
 
   const { data } = candidateInfo.getDetais();
   if (data?.linkedInProfile && data?.testResult) {
-    iframe.src = `${CONFIG.PRODUCTION_URL}/?linkedInProfile=${data?.linkedInProfile}`;
+    iframe.src = `${getConfig().PRODUCTION_URL}/?linkedInProfile=${data?.linkedInProfile}`;
   } else if (data?.linkedInProfile) {
-    iframe.src = `${CONFIG.PRODUCTION_URL}/take-test`;
+    iframe.src = `${getConfig().PRODUCTION_URL}/take-test`;
   } else {
-    iframe.src = `${CONFIG.PRODUCTION_URL}/apply/?linkedInProfile=${linkedInProfile}&name=${name}`;
+    iframe.src = `${getConfig().PRODUCTION_URL}/apply/?linkedInProfile=${linkedInProfile}&name=${name}`;
   }
 }
 

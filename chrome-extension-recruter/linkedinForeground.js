@@ -1,3 +1,5 @@
+const { PRODUCTION_URL } = require('./config');
+
 let instance = null;
 class Candidate {
   constructor(name = '', linkedInProfile = '', data = null) {
@@ -58,7 +60,7 @@ function addIframeToSidebar(src) {
 function showTestResults(candidateInfo) {
   openSidebar();
   document.getElementsByTagName('body')[0].classList.add('hiddenScroll');
-  const src = `https://sleepy-meadow-81233.herokuapp.com/?find=${candidateInfo}&hf=true`;
+  const src = `${PRODUCTION_URL}/?find=${candidateInfo}&hf=true`;
   addIframeToSidebar(src);
 }
 
@@ -186,7 +188,7 @@ function addButtonIfCorrectPage() {
 function handleShowRecommandedCandidates(e) {
   e.stopPropagation();
   openSidebar();
-  const src = 'http://localhost:3000/recommanded/candidates';
+  const src = `${PRODUCTION_URL}/recommanded/candidates`;
   addIframeToSidebar(src);
 }
 

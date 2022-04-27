@@ -1,19 +1,20 @@
+const { B_PROD_URL } = require('../config');
 // const BASE_URL = 'https://candidate-infon.herokuapp.com/api/v1/candidates';
-const BASE_URL = "https://shortline-be.herokuapp.com/api/v1/candidates";
+// const BASE_URL = "https://shortline-be.herokuapp.com/api/v1/candidates";
 
 function createObjectParams(object) {
-  if (!object) return "";
+  if (!object) return '';
 
   return Object.keys(object).reduce((acc, current) => {
     if (!object[current]) return acc;
     return acc + `${current}=${object[current]}&`;
-  }, "");
+  }, '');
 }
 
-const getDetailsByLinkedInId = (linkedINProfile = "") => {
+const getDetailsByLinkedInId = (linkedINProfile = '') => {
   return new Promise((resolve, reject) => {
-    console.log("name to be fetched: ", linkedINProfile);
-    fetch(`${BASE_URL}/getCandidateByAny?linkedInProfile=${linkedINProfile}`)
+    console.log('name to be fetched: ', linkedINProfile);
+    fetch(`${B_PROD_URL}/getCandidateByAny?linkedInProfile=${linkedINProfile}`)
       .then((response) => response.json())
       .then((data) => {
         const { candidate } = data;
@@ -22,7 +23,7 @@ const getDetailsByLinkedInId = (linkedINProfile = "") => {
         });
       })
       .catch((err) => {
-        console.log("error:", err);
+        console.log('error:', err);
         reject(err);
       });
   });
@@ -30,15 +31,15 @@ const getDetailsByLinkedInId = (linkedINProfile = "") => {
 
 const getDetailsByAny = (reqObject) => {
   return new Promise((resolve, reject) => {
-	  var {email} = reqObject;
-    const urlParams = createObjectParams({email});
-    fetch(`${BASE_URL}/getCandidateByAny?${urlParams}`)
+    var { email } = reqObject;
+    const urlParams = createObjectParams({ email });
+    fetch(`${B_PROD_URL}/getCandidateByAny?${urlParams}`)
       .then((response) => response.json())
       .then((data) => {
         resolve(data);
       })
       .catch((err) => {
-        console.log("error:", err);
+        console.log('error:', err);
         reject(err);
       });
   });

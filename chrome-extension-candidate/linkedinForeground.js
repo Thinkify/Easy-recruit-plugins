@@ -1,3 +1,5 @@
+const { PRODUCTION_URL } = require('./config');
+
 let instance = null;
 class Candidate {
   constructor(name = '', linkedInProfile = '', data = null) {
@@ -52,11 +54,11 @@ function showTestResults() {
 
   const { data } = candidateInfo.getDetais();
   if (data?.linkedInProfile && data?.testResult) {
-    iframe.src = `http://localhost:3000/?linkedInProfile=${data?.linkedInProfile}`;
+    iframe.src = `${PRODUCTION_URL}/?linkedInProfile=${data?.linkedInProfile}`;
   } else if (data?.linkedInProfile) {
-    iframe.src = `http://localhost:3000/take-test`;
+    iframe.src = `${PRODUCTION_URL}/take-test`;
   } else {
-    iframe.src = `http://localhost:3000/add/?linkedInProfile=${linkedInProfile}&name=${name}`;
+    iframe.src = `${PRODUCTION_URL}/add/?linkedInProfile=${linkedInProfile}&name=${name}`;
   }
 }
 

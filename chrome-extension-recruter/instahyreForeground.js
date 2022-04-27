@@ -1,3 +1,5 @@
+const { PRODUCTION_URL } = require('./config');
+
 console.log('Inside  myInstahyreScript content script');
 
 const getContentJson = (model) => {
@@ -63,7 +65,7 @@ const popupSidebar = `
 
 async function openSidebar(event) {
   // const URL = 'https://sleepy-meadow-81233.herokuapp.com';
-  const URL = 'http://localhost:3000';
+  // const URL = 'http://localhost:3000';
   event.preventDefault();
   event.stopPropagation();
   const element = document.getElementById('thinkify_modal');
@@ -79,9 +81,9 @@ async function openSidebar(event) {
     const params = createObjectParams(userData);
     console.log('====', response);
     if (response.message === 'User not found') {
-      url = `${URL}/add?${params}`;
+      url = `${PRODUCTION_URL}/add?${params}`;
     } else {
-      url = `${URL}/?find=${response?.candidate?.email}&hf=true`;
+      url = `${PRODUCTION_URL}/?find=${response?.candidate?.email}&hf=true`;
     }
     iframe.src = url;
     $('#modal__close').click(closeSidebar);

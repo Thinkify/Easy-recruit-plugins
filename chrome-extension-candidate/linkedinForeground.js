@@ -56,7 +56,7 @@ function showTestResults() {
   } else if (data?.linkedInProfile) {
     iframe.src = `http://localhost:3000/take-test`;
   } else {
-    iframe.src = `http://localhost:3000/apply/?linkedInProfile=${linkedInProfile}&name=${name}`;
+    iframe.src = `http://localhost:3000/add/?linkedInProfile=${linkedInProfile}&name=${name}`;
   }
 }
 

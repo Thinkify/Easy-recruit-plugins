@@ -12,11 +12,10 @@
 .real-menu {
   position: fixed;
   top: 0;
-  right: -40vw;
+  right: -30vw;
   z-index: 999999999;
-  width: 40vw;
+  width: 30vw;
   height: 100%;
-  padding: 0.5rem 1rem;
   box-shadow: 0 6px 12px rgba(107, 82, 82, 0.3);
   background-color: white;
   -webkit-box-sizing: border-box;
@@ -35,7 +34,7 @@
 
 #iframe-wrapper {
   height: 100%;
-  width: 97%;
+  width: 100%;
 }
 
 #iframe-wrapper iframe {
@@ -45,9 +44,20 @@
 }
 
 .modal__close {
-  position: absolute;
-  top: 10px;
-  right: 10px;
   color: #585858;
   text-decoration: none;
+}
+
+.close_icon_container {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+}
+
+.close_icon_container a {
+  margin-right: 2rem;
+}
+
+.overflow_hidden {
+  overflow: hidden !important;
 }

@@ -82,7 +82,6 @@
   color: rgba(0, 0, 0, 0.6);
 }
 
-
 /* If you like this, be sure to ❤️ it. */
 .wrapper {
   height: 100vh;
@@ -110,7 +109,7 @@
   /* visibility: visible; */
   display: flex !important;
   opacity: 1;
-  z-index:999999999 !important;
+  z-index: 999999999 !important;
 }
 
 .modal__content {
@@ -126,26 +125,16 @@
   text-align: right;
 }
 
-.modal__close {
+.thinkify-button {
   position: absolute;
-  top: 10px;
-  right: 10px;
-  color: #585858;
-  text-decoration: none;
-  font-size: 16px;
-  font-weight: 600;
-}
-
-.thinkify-button{
-  position:absolute
 }
 
 .thinkify-info-button {
-    font-size: 12px;
-    border: 2px solid rgb(128, 0, 128);
-    line-height: 18px;
-    padding: 0 2px;
-    color: rgb(128, 0, 128);
-    font-weight: bold;
-    cursor: pointer;
+  font-size: 12px;
+  border: 2px solid rgb(128, 0, 128);
+  line-height: 18px;
+  padding: 0 2px;
+  color: rgb(128, 0, 128);
+  font-weight: bold;
+  cursor: pointer;
 }

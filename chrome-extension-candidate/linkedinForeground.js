@@ -158,8 +158,45 @@ function onUrlChange() {
   }, 100);
 }
 
+function getInfoFromCard(jobHtml){
+  
+  let url = $(jobHtml).find('.artdeco-entity-lockup__title a')[0].href;
+  let title = $(jobHtml).find('.artdeco-entity-lockup__title a')[0].innerHTML;
+  let companyName = $(jobHtml).find('.job-card-container__company-name')[0].innerHTML;
+  let image = $(jobHtml).find('.job-card-list__entity-lockup img')[0].src;
+  let companyId = $(jobHtml).find('.job-card-container__company-name')[0].href;
+  let metaHTML = $(jobHtml).find('.job-card-container__metadata-item');
+  let metaDetais = Array(...metaHTML).map(ite => {
+    return $(ite)[0].innerHTML.replace(/\n/g, '').trim();;
+  });
+
+  url = url.replace(/\n/g, '').trim();
+  title = title.replace(/\n/g, '').trim();
+  companyName = companyName.replace(/\n/g, '').trim();
+  companyId =companyId.replace(/\n/g, '').trim();
+  image = image.replace(/\n/g, '').trim();
+
+  return {
+    url,
+    title,
+    companyName,
+    companyId,
+    metaDetais,
+    image
+  }
+}
+
+function saveTheRecomendedJobs(){
+  const { linkedInProfile } = getDetailsOfCandidate();
+  const allTheListOfJobs = $('.job-card-container');
+  var listToSave = Array(...allTheListOfJobs).map(item => getInfoFromCard(item))
+  console.log('start Scraping',listToSave);
+}
+
 $(document).ready(function () {
   console.log('step1:');
+  saveTheRecomendedJobs();
+
   onUrlChange();
 
   let lastUrl = location.href;

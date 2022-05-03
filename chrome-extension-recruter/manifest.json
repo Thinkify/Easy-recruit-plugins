@@ -35,7 +35,8 @@
       "matches": [
         "https://www.linkedin.com/jobs/*",
         "https://www.linkedin.com/search/results/*",
-        "https://sleepy-meadow-81233.herokuapp.com/*"
+        "https://sleepy-meadow-81233.herokuapp.com/*",
+        "https://www.linkedin.com/search/results/people"
       ]
     }
   ],

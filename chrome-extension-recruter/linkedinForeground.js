@@ -1,4 +1,5 @@
 let instance = null;
+console.log('Enabled:');
 class Candidate {
   constructor(name = '', linkedInProfile = '', data = null) {
     if (!instance) {

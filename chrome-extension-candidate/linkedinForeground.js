@@ -35,9 +35,9 @@ const popupSidebar = `
 <div id="thinkify_modal">
   <div id="body-overlay"></div>
   <nav class="real-menu" role="navigation">
+  <div class="close_icon_container"><a href="#" class="modal__close" id="modal__close">&times;</a></div>
     <div id='iframe-wrapper'>
     </div>
-    <a href="#" class="modal__close" id="modal__close">&times;</a>
   </nav>
 </div>`;
 
@@ -51,18 +51,24 @@ function showTestResults() {
   console.log('candidate:', candidateInfo.getDetais());
 
   const { data } = candidateInfo.getDetais();
+  // iframe.src = `${getConfig().DEVELOPMENT_URL}`;
   if (data?.linkedInProfile && data?.testResult) {
-    iframe.src = `${getConfig().PRODUCTION_URL}/?linkedInProfile=${data?.linkedInProfile}`;
+    iframe.src = `${getConfig().PRODUCTION_URL}/?linkedInProfile=${
+      data?.linkedInProfile
+    }`;
   } else if (data?.linkedInProfile) {
     iframe.src = `${getConfig().PRODUCTION_URL}/take-test`;
   } else {
-    iframe.src = `${getConfig().PRODUCTION_URL}/apply/?linkedInProfile=${linkedInProfile}&name=${name}`;
+    iframe.src = `${
+      getConfig().PRODUCTION_URL
+    }/apply/?linkedInProfile=${linkedInProfile}&name=${name}`;
   }
 }
 
 function closeSidebar() {
   const element = document.getElementById('thinkify_modal');
   element.classList.remove('menu-open');
+  document.getElementsByTagName('body')[0].classList.remove('overflow_hidden');
   $('#iframe-wrapper').html('');
 }
 
@@ -87,6 +93,7 @@ const getDetailsOfCandidate = () => {
 function openSidebar() {
   const element = document.getElementById('thinkify_modal');
   element.classList.add('menu-open');
+  document.getElementsByTagName('body')[0].classList.add('overflow_hidden');
   showTestResults();
 }
 
@@ -137,7 +144,8 @@ function addButtonIfCorrectPage() {
         if ($('#demo-modal').length === 0) {
           candidateInfo.setDetails({ data: candidate });
           const buttonToShow = getButtonName(candidate);
-          appendButton(model, buttonToShow + popupSidebar);
+          appendButton(model, buttonToShow);
+          $('body').append(popupSidebar);
           setTimeout(() => {
             // $('#demo-modal').click(showMainPopupFirst);
             $('#thinkify-button').click(openSidebar);
@@ -158,24 +166,24 @@ function onUrlChange() {
   }, 100);
 }
 
-function getInfoFromCard(jobHtml){
-
+function getInfoFromCard(jobHtml) {
   let url = $(jobHtml).find('.artdeco-entity-lockup__title a')[0].href;
   let title = $(jobHtml).find('.artdeco-entity-lockup__title a')[0].innerHTML;
-  let companyName = $(jobHtml).find('.job-card-container__company-name')[0].innerHTML;
+  let companyName = $(jobHtml).find('.job-card-container__company-name')[0]
+    .innerHTML;
   let image = $(jobHtml).find('.job-card-list__entity-lockup img')[0].src;
   let companyId = $(jobHtml).find('.job-card-container__company-name')[0].href;
   let metaHTML = $(jobHtml).find('.job-card-container__metadata-item');
-  let jobId =  $(jobHtml).attr('data-job-id');
-  let metaDetais = Array(...metaHTML).map(ite => {
-    return $(ite)[0].innerHTML.replace(/\n/g, '').trim();;
+  let jobId = $(jobHtml).attr('data-job-id');
+  let metaDetais = Array(...metaHTML).map((ite) => {
+    return $(ite)[0].innerHTML.replace(/\n/g, '').trim();
   });
 
   url = url.replace(/\n/g, '').trim();
   title = title.replace(/\n/g, '').trim();
   companyName = companyName.replace(/\n/g, '').trim();
-  companyId =companyId.replace(/\n/g, '').trim();
-  companyId =companyId.split('/');
+  companyId = companyId.replace(/\n/g, '').trim();
+  companyId = companyId.split('/');
   companyId = companyId[companyId.length - 2];
   image = image.replace(/\n/g, '').trim();
 
@@ -186,24 +194,26 @@ function getInfoFromCard(jobHtml){
     companyId,
     metaDetais,
     image,
-    jobId
-  }
+    jobId,
+  };
 }
 
 const saveTheRecomendedJobs = async () => {
   const { linkedInProfile } = getDetailsOfCandidate();
   const allTheListOfJobs = $('.job-card-container');
-  var listToSave = Array(...allTheListOfJobs).map(item => getInfoFromCard(item))
-  console.log('start Scraping',listToSave);
+  var listToSave = Array(...allTheListOfJobs).map((item) =>
+    getInfoFromCard(item)
+  );
+  console.log('start Scraping', listToSave);
   const responce = await postgetDetailsByLinkedInIdData(listToSave);
-  console.log('responce:',responce);
-}
+  console.log('responce:', responce);
+};
 
 $(document).ready(function () {
   console.log('step1:');
-  setTimeout(()=>{
+  setTimeout(() => {
     saveTheRecomendedJobs();
-  },5000);
+  }, 5000);
 
   onUrlChange();
 

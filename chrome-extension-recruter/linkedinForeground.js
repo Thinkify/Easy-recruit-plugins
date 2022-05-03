@@ -35,9 +35,9 @@ const popupSidebar = `
 <div id="thinkify_modal">
   <div id="body-overlay"></div>
   <nav class="real-menu" role="navigation">
+    <div class="close_icon_container"><a href="#" class="modal__close" id="modal__close">&times;</a></div>
     <div id='iframe-wrapper'>
     </div>
-    <a href="#" class="modal__close" id="modal__close">&times;</a>
   </nav>
 </div>`;
 

@@ -139,14 +139,6 @@
   text-align: right;
 }
 
-.modal__close {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  color: #585858;
-  text-decoration: none;
-}
-
 .thinkify-button {
   position: absolute;
 }

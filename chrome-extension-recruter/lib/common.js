@@ -11,7 +11,9 @@ const getDetailsByLinkedInId = (linkedINProfile = '') => {
   return new Promise((resolve, reject) => {
     console.log('name to be fetched: ', linkedINProfile);
     fetch(
-      `${getConfig().B_PROD_URL}/getCandidateByAny?linkedInProfile=${linkedINProfile}`
+      `${
+        getConfig().B_PROD_URL
+      }/getCandidateByAny?linkedInProfile=${linkedINProfile}`
     )
       .then((response) => response.json())
       .then((data) => {
@@ -43,13 +45,12 @@ const getDetailsByAny = (reqObject) => {
   });
 };
 
-function getConfig(){
+function getConfig() {
   let CONFIG = {
     PRODUCTION_URL: 'https://sleepy-meadow-81233.herokuapp.com',
     DEVELOPMENT_URL: 'http://localhost:3000',
-    B_DEV_URL: 'https://shortline-be.herokuapp.com/api/v1/candidates',
-    B_PROD_URL: 'http://localhost:5000/api/v1/candidates',
+    B_PROD_URL: 'https://shortline-be.herokuapp.com/api/v1/candidates',
+    B_DEV_URL: 'http://localhost:5000/api/v1/candidates',
   };
   return CONFIG;
 }
-

@@ -236,5 +236,5 @@ $(document).ready(function () {
   setTimeout(() => {
     addButtonIfCorrectPage();
     addShowRecommandedButton();
-  }, 500);
+  }, 5000);
 });

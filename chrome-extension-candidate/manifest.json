@@ -27,7 +27,7 @@
         "linkedinForeground.js"
       ],
       "css": ["common.css", "styles.css"],
-      "matches": ["https://www.linkedin.com/jobs/*"]
+      "matches": ["https://www.linkedin.com/jobs/*","https://www.linkedin.com/jobs/search/*"]
     }
   ],
   "web_accessible_resources": [

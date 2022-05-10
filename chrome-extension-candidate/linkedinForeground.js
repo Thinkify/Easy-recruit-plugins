@@ -179,7 +179,7 @@ function getInfoFromCard(jobHtml, skills) {
 
   url = url.replace(/\n/g, "").trim();
   title = title.replace(/\n/g, "").trim();
-  companyName = companyName.replace(/\n/g, "").trim();
+  companyName = companyName.replace(/\n/g, "").trim().toLowerCase();
   companyId = companyId.replace(/\n/g, "").trim();
   companyId = companyId.split("/");
   companyId = companyId[companyId.length - 2];
@@ -205,16 +205,72 @@ const sleep = async (time) => {
   });
 };
 
-const saveTheRecomendedJobs = async () => {
+const scrapeData = async () => {
   await sleep(5);
+  if (location.pathname.includes("/search/results/people/")) {
+    saveRecruiterOfCompany();
+    return;
+  }
+
+    saveTheRecomendedJobs();
+};
+
+const saveRecruiterOfCompany = async () => {
+  // check if the url have recruiter as key word
+  const params = new URLSearchParams(location.search);
+  let keys = params.get("keywords");
+  console.log("keys:", keys);
+  if (!keys.includes("recruiter")) {
+    return;
+  }
+  const companyName = keys.replace("recruiter", "").trim().toLowerCase();
+
+  let listOfRecruiterOfCompany = Array(
+    ...$(".reusable-search__result-container ")
+  ).map((item) => {
+    return {
+      image: $(item).find(".entity-result__universal-image img").attr("src"),
+      linkedIn: $(item).find("a.app-aware-link")[1].href,
+      name: $(item)
+        .find(".app-aware-link span span")[0]
+        .innerHTML.replace("<!---->", ""),
+      companyName,
+    };
+  });
+
+  listOfRecruiterOfCompany = listOfRecruiterOfCompany.map((item) => {
+    return {
+      ...item,
+      linkedIn: item.linkedIn
+        ? item.linkedIn.split("?")[0].split("/")[4]
+        : undefined,
+    };
+  });
+
+  listOfRecruiterOfCompany = listOfRecruiterOfCompany.filter(item => item.linkedIn)
+
+  console.log(
+    "🚀 ~ file: linkedinForeground.js ~ line 238 ~ listOfRecruiterOfCompany ~ listOfRecruiterOfCompany",
+    listOfRecruiterOfCompany
+  );
+
+  try {
+    await postLinkedInContactData(listOfRecruiterOfCompany);
+  } catch (error) {
+    console.log("error",error);
+  }
+
+};
+
+const saveTheRecomendedJobs = async () => {
   const { linkedInProfile } = getDetailsOfCandidate();
   const allTheListOfJobs = $(".job-card-container");
   const params = new URLSearchParams(location.search);
-  let skills = params.get("keywords")
-  if(!skills){
-	skills = $('.jobs-search-box__text-input')[0].value;
+  let skills = params.get("keywords");
+  if (!skills) {
+    skills = $(".jobs-search-box__text-input")[0].value;
   }
-  skills =skills?.split(" ");
+  skills = skills?.split(" ");
   skills = skills?.length ? skills.filter((item) => item.trim()) : [];
   if (skills?.length) {
     var listToSave = Array(...allTheListOfJobs).map((item) =>
@@ -228,9 +284,11 @@ const saveTheRecomendedJobs = async () => {
   }
 };
 
+console.log("step0:");
+
 $(document).ready(function () {
   console.log("step1:");
-  saveTheRecomendedJobs();
+  scrapeData();
   onUrlChange();
 
   $(".jobs-search-box__submit-button").click(saveTheRecomendedJobs);
@@ -242,7 +300,7 @@ $(document).ready(function () {
       lastUrl = url;
       if ($("#demo-modal").length === 0) {
         onUrlChange();
-		saveTheRecomendedJobs();
+        scrapeData();
       }
     }
   }).observe(document, { subtree: true, childList: true });

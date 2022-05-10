@@ -293,15 +293,18 @@ $(document).ready(function () {
 
   $(".jobs-search-box__submit-button").click(saveTheRecomendedJobs);
 
-  let lastUrl = location.href;
-  new MutationObserver(() => {
-    const url = location.href;
-    if (url !== lastUrl) {
-      lastUrl = url;
-      if ($("#demo-modal").length === 0) {
-        onUrlChange();
-        scrapeData();
-      }
+  let previousUrl = "";
+
+  const observer = new MutationObserver(() => {
+    if (window.location.href !== previousUrl) {
+      console.log(`URL changed from ${previousUrl} to ${window.location.href}`);
+      previousUrl = window.location.href;
+      // do your thing
+      console.log('trigger');
     }
-  }).observe(document, { subtree: true, childList: true });
+  });
+  const config = { subtree: true, childList: true };
+  
+  // start observing change
+  observer.observe(document, config);
 });

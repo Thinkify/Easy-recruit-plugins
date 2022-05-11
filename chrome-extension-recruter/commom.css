@@ -12,9 +12,9 @@
 .real-menu {
   position: fixed;
   top: 0;
-  right: -40vw;
+  right: -30vw;
   z-index: 999999999;
-  width: 40vw;
+  width: 30vw;
   height: 100%;
   box-shadow: 0 6px 12px rgba(107, 82, 82, 0.3);
   background-color: white;

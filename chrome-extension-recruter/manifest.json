@@ -1,5 +1,4 @@
 {
-  // Comments are accepted in the manifest, even though it is JSON.
   "manifest_version": 3,
   "name": "Thinkify Recruter",
   "description": "A Recruter help plugin to find better jobs for them self",
@@ -9,13 +8,13 @@
     "48": "logo/logo-48.png",
     "128": "logo/logo-128.png"
   },
-  // "options_page": "settings/settings.html",
-  // "action": {
-  //     "default_title": "Chrome Addon v3 Starter",
-  //     "default_popup": "out/index.html"
-  // },
-  "permissions": ["tabs", "storage"],
-  "host_permissions": ["*://*/*"],
+  "permissions": [
+    "tabs",
+    "storage"
+  ],
+  "host_permissions": [
+    "*://*/*"
+  ],
   "background": {
     "service_worker": "service-worker.js"
   },
@@ -26,23 +25,39 @@
         "lib/common.js",
         "instahyreForeground.js"
       ],
-      "css": ["commom.css", "instahyreForeground.css"],
-      "matches": ["https://www.instahyre.com/employer/candidates/*"]
+      "css": [
+        "commom.css",
+        "instahyreForeground.css"
+      ],
+      "matches": [
+        "https://www.instahyre.com/employer/candidates/*"
+      ]
     },
     {
-      "js": ["lib/jquery.js", "lib/common.js", "linkedinForeground.js"],
-      "css": ["commom.css", "styles.css"],
+      "js": [
+        "lib/jquery.js",
+        "lib/common.js",
+        "linkedinForeground.js"
+      ],
+      "css": [
+        "commom.css",
+        "styles.css"
+      ],
       "matches": [
+        "https://www.linkedin.com/*",
         "https://www.linkedin.com/jobs/*",
         "https://www.linkedin.com/search/results/*",
         "https://sleepy-meadow-81233.herokuapp.com/*",
-        "https://www.linkedin.com/search/results/people"
+        "https://www.linkedin.com/search/results/people/*"
       ]
     }
   ],
   "web_accessible_resources": [
     {
-      "resources": ["out/index.html", "popup/popup.html"],
+      "resources": [
+        "out/index.html",
+        "popup/popup.html"
+      ],
       "matches": [
         "https://www.linkedin.com/*",
         "http://triplebyte.com/*",

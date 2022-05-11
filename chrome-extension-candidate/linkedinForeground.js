@@ -1,6 +1,6 @@
 let instance = null;
 class Candidate {
-  constructor(name = '', linkedInProfile = '', data = null) {
+  constructor(name = "", linkedInProfile = "", data = null) {
     if (!instance) {
       instance = this;
     }
@@ -41,14 +41,14 @@ const popupSidebar = `
   </nav>
 </div>`;
 
-const routeToJoin = '/apply';
+const routeToJoin = "/apply";
 
 function showTestResults() {
-  const iframe = document.createElement('iframe');
-  document.getElementById('iframe-wrapper').appendChild(iframe);
+  const iframe = document.createElement("iframe");
+  document.getElementById("iframe-wrapper").appendChild(iframe);
 
   const { linkedInProfile, name } = getDetailsOfCandidate();
-  console.log('candidate:', candidateInfo.getDetais());
+  console.log("candidate:", candidateInfo.getDetais());
 
   const { data } = candidateInfo.getDetais();
   // iframe.src = `${getConfig().DEVELOPMENT_URL}`;
@@ -66,10 +66,10 @@ function showTestResults() {
 }
 
 function closeSidebar() {
-  const element = document.getElementById('thinkify_modal');
-  element.classList.remove('menu-open');
-  document.getElementsByTagName('body')[0].classList.remove('overflow_hidden');
-  $('#iframe-wrapper').html('');
+  const element = document.getElementById("thinkify_modal");
+  element.classList.remove("menu-open");
+  document.getElementsByTagName("body")[0].classList.remove("overflow_hidden");
+  $("#iframe-wrapper").html("");
 }
 
 const getDetailsOfCandidate = () => {
@@ -78,9 +78,9 @@ const getDetailsOfCandidate = () => {
   );
 
   const linkedInProfile = contentExtracted?.included[0]?.publicIdentifier;
-  const firstName = contentExtracted?.included[0]?.firstName || '';
-  const lastName = contentExtracted?.included[0]?.lastName || '';
-  const name = firstName + ' ' + lastName;
+  const firstName = contentExtracted?.included[0]?.firstName || "";
+  const lastName = contentExtracted?.included[0]?.lastName || "";
+  const name = firstName + " " + lastName;
 
   candidateInfo.setDetails((linkedInProfile, name));
 
@@ -91,15 +91,15 @@ const getDetailsOfCandidate = () => {
 };
 
 function openSidebar() {
-  const element = document.getElementById('thinkify_modal');
-  element.classList.add('menu-open');
-  document.getElementsByTagName('body')[0].classList.add('overflow_hidden');
+  const element = document.getElementById("thinkify_modal");
+  element.classList.add("menu-open");
+  document.getElementsByTagName("body")[0].classList.add("overflow_hidden");
   showTestResults();
 }
 
 function hideMainPopupFirst() {
-  $('#demo-modal-popup').removeClass('modal__target');
-  $('#iframe-wrapper').html('');
+  $("#demo-modal-popup").removeClass("modal__target");
+  $("#iframe-wrapper").html("");
 }
 
 const getContentJson = async (linkedInProfile) => {
@@ -117,9 +117,9 @@ const getButtonName = (candidate) => {
   }
 
   const buttonName = {
-    1: 'Add details',
-    2: 'Vet yourself',
-    3: 'Next Step',
+    1: "Add details",
+    2: "Vet yourself",
+    3: "Next Step",
   };
   const addDetailsButton = `<div class="add-details" id="demo-modal"><button id="thinkify-button">${buttonName[type]}</button></div>`;
   return addDetailsButton;
@@ -129,28 +129,28 @@ function addButtonIfCorrectPage() {
   const { linkedInProfile } = getDetailsOfCandidate();
 
   var checkExist = setInterval(function () {
-    if ($('.jobs-apply-button--top-card').length) {
-      console.log('Exists!');
-      const model = $('.jobs-save-button ').parent();
+    if ($(".jobs-apply-button--top-card").length) {
+      console.log("Exists!");
+      const model = $(".jobs-save-button ").parent();
 
       function appendButton(model, buttonView) {
-        (newdiv2 = document.createElement('div')),
-          (existingdiv1 = document.getElementById('foo'));
+        (newdiv2 = document.createElement("div")),
+          (existingdiv1 = document.getElementById("foo"));
         model.append(buttonView, [newdiv2, existingdiv1]);
       }
 
       getContentJson(linkedInProfile).then((candidate) => {
-        console.log('candidate:', candidate);
-        if ($('#demo-modal').length === 0) {
+        console.log("candidate:", candidate);
+        if ($("#demo-modal").length === 0) {
           candidateInfo.setDetails({ data: candidate });
           const buttonToShow = getButtonName(candidate);
           appendButton(model, buttonToShow);
-          $('body').append(popupSidebar);
+          $("body").append(popupSidebar);
           setTimeout(() => {
             // $('#demo-modal').click(showMainPopupFirst);
-            $('#thinkify-button').click(openSidebar);
-            $('#body-overlay').click(closeSidebar);
-            $('#modal__close').click(closeSidebar);
+            $("#thinkify-button").click(openSidebar);
+            $("#body-overlay").click(closeSidebar);
+            $("#modal__close").click(closeSidebar);
           }, 0);
         }
       });
@@ -159,33 +159,31 @@ function addButtonIfCorrectPage() {
   }, 100);
 }
 
-function onUrlChange() {
-  console.log('step2:');
-  setTimeout(() => {
-    addButtonIfCorrectPage();
-  }, 100);
-}
+const onUrlChange = async () => {
+  await sleep(5);
+  addButtonIfCorrectPage();
+};
 
-function getInfoFromCard(jobHtml) {
-  let url = $(jobHtml).find('.artdeco-entity-lockup__title a')[0].href;
-  let title = $(jobHtml).find('.artdeco-entity-lockup__title a')[0].innerHTML;
-  let companyName = $(jobHtml).find('.job-card-container__company-name')[0]
+function getInfoFromCard(jobHtml, skills) {
+  let url = $(jobHtml).find(".artdeco-entity-lockup__title a")[0].href;
+  let title = $(jobHtml).find(".artdeco-entity-lockup__title a")[0].innerHTML;
+  let companyName = $(jobHtml).find(".job-card-container__company-name")[0]
     .innerHTML;
-  let image = $(jobHtml).find('.job-card-list__entity-lockup img')[0].src;
-  let companyId = $(jobHtml).find('.job-card-container__company-name')[0].href;
-  let metaHTML = $(jobHtml).find('.job-card-container__metadata-item');
-  let jobId = $(jobHtml).attr('data-job-id');
+  let image = $(jobHtml).find(".job-card-list__entity-lockup img")[0].src;
+  let companyId = $(jobHtml).find(".job-card-container__company-name")[0].href;
+  let metaHTML = $(jobHtml).find(".job-card-container__metadata-item");
+  let jobId = $(jobHtml).attr("data-job-id");
   let metaDetais = Array(...metaHTML).map((ite) => {
-    return $(ite)[0].innerHTML.replace(/\n/g, '').trim();
+    return $(ite)[0].innerHTML.replace(/\n/g, "").trim();
   });
 
-  url = url.replace(/\n/g, '').trim();
-  title = title.replace(/\n/g, '').trim();
-  companyName = companyName.replace(/\n/g, '').trim();
-  companyId = companyId.replace(/\n/g, '').trim();
-  companyId = companyId.split('/');
+  url = url.replace(/\n/g, "").trim();
+  title = title.replace(/\n/g, "").trim();
+  companyName = companyName.replace(/\n/g, "").trim().toLowerCase();
+  companyId = companyId.replace(/\n/g, "").trim();
+  companyId = companyId.split("/");
   companyId = companyId[companyId.length - 2];
-  image = image.replace(/\n/g, '').trim();
+  image = image.replace(/\n/g, "").trim();
 
   return {
     url,
@@ -195,36 +193,118 @@ function getInfoFromCard(jobHtml) {
     metaDetais,
     image,
     jobId,
+    skills,
   };
 }
 
-const saveTheRecomendedJobs = async () => {
-  const { linkedInProfile } = getDetailsOfCandidate();
-  const allTheListOfJobs = $('.job-card-container');
-  var listToSave = Array(...allTheListOfJobs).map((item) =>
-    getInfoFromCard(item)
-  );
-  console.log('start Scraping', listToSave);
-  const responce = await postgetDetailsByLinkedInIdData(listToSave);
-  console.log('responce:', responce);
+const sleep = async (time) => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve();
+    }, time * 1000);
+  });
 };
 
-$(document).ready(function () {
-  console.log('step1:');
-  setTimeout(() => {
-    saveTheRecomendedJobs();
-  }, 5000);
+const scrapeData = async () => {
+  await sleep(5);
+  if (location.pathname.includes("/search/results/people/")) {
+    saveRecruiterOfCompany();
+    return;
+  }
 
+    saveTheRecomendedJobs();
+};
+
+const saveRecruiterOfCompany = async () => {
+  // check if the url have recruiter as key word
+  const params = new URLSearchParams(location.search);
+  let keys = params.get("keywords");
+  console.log("keys:", keys);
+  if (!keys.includes("recruiter")) {
+    return;
+  }
+  const companyName = keys.replace("recruiter", "").trim().toLowerCase();
+
+  let listOfRecruiterOfCompany = Array(
+    ...$(".reusable-search__result-container ")
+  ).map((item) => {
+    return {
+      image: $(item).find(".entity-result__universal-image img").attr("src"),
+      linkedIn: $(item).find("a.app-aware-link")[1].href,
+      name: $(item)
+        .find(".app-aware-link span span")[0]
+        .innerHTML.replace("<!---->", ""),
+      companyName,
+    };
+  });
+
+  listOfRecruiterOfCompany = listOfRecruiterOfCompany.map((item) => {
+    return {
+      ...item,
+      linkedIn: item.linkedIn
+        ? item.linkedIn.split("?")[0].split("/")[4]
+        : undefined,
+    };
+  });
+
+  listOfRecruiterOfCompany = listOfRecruiterOfCompany.filter(item => item.linkedIn)
+
+  console.log(
+    "🚀 ~ file: linkedinForeground.js ~ line 238 ~ listOfRecruiterOfCompany ~ listOfRecruiterOfCompany",
+    listOfRecruiterOfCompany
+  );
+
+  try {
+    await postLinkedInContactData(listOfRecruiterOfCompany);
+  } catch (error) {
+    console.log("error",error);
+  }
+
+};
+
+const saveTheRecomendedJobs = async () => {
+  const { linkedInProfile } = getDetailsOfCandidate();
+  const allTheListOfJobs = $(".job-card-container");
+  const params = new URLSearchParams(location.search);
+  let skills = params.get("keywords");
+  if (!skills) {
+    skills = $(".jobs-search-box__text-input")[0].value;
+  }
+  skills = skills?.split(" ");
+  skills = skills?.length ? skills.filter((item) => item.trim()) : [];
+  if (skills?.length) {
+    var listToSave = Array(...allTheListOfJobs).map((item) =>
+      getInfoFromCard(item, skills)
+    );
+    console.log("start Scraping", listToSave);
+    const responce = await postgetDetailsByLinkedInIdData(listToSave);
+    console.log("responce:", responce);
+  } else {
+    console.log("no Skills found");
+  }
+};
+
+console.log("step0:");
+
+$(document).ready(function () {
+  console.log("step1:");
+  scrapeData();
   onUrlChange();
 
-  let lastUrl = location.href;
-  new MutationObserver(() => {
-    const url = location.href;
-    if (url !== lastUrl) {
-      lastUrl = url;
-      if ($('#demo-modal').length === 0) {
-        onUrlChange();
-      }
+  $(".jobs-search-box__submit-button").click(saveTheRecomendedJobs);
+
+  let previousUrl = "";
+
+  const observer = new MutationObserver(() => {
+    if (window.location.href !== previousUrl) {
+      console.log(`URL changed from ${previousUrl} to ${window.location.href}`);
+      previousUrl = window.location.href;
+      // do your thing
+      console.log('trigger');
     }
-  }).observe(document, { subtree: true, childList: true });
+  });
+  const config = { subtree: true, childList: true };
+  
+  // start observing change
+  observer.observe(document, config);
 });

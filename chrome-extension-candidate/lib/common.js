@@ -36,10 +36,24 @@ async function postgetDetailsByLinkedInIdData(data = {}) {
   return response.json(); // parses JSON response into native JavaScript objects
 }
 
+async function postLinkedInContactData(data = {}) {
+  // Default options are marked with *
+  const url = `${getConfig().BE_URL}/linkedInContact/registerLinkedInContactInBulk`;
+  const response = await fetch(url, {
+    method: 'POST', // *GET, POST, PUT, DELETE, etc.
+    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data), // body data type must match "Content-Type" header
+  });
+  return response.json(); // parses JSON response into native JavaScript objects
+}
+
 function getConfig() {
   const CONFIG = {
     PRODUCTION_URL: 'https://short-line-c.herokuapp.com',
-    DEVELOPMENT_URL: 'http://localhost:3000',
+    DEVELOPMENT_URL: 'http://localhost:5000/api/v1',
     B_DEV_URL: 'https://shortline-be.herokuapp.com/api/v1/candidates',
     B_PROD_URL: 'https://shortline-be.herokuapp.com/api/v1/candidates',
     BE_URL: 'https://shortline-be.herokuapp.com/api/v1',

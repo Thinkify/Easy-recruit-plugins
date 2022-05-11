@@ -1,7 +1,7 @@
 let instance = null;
-console.log('Enabled:');
+console.log("Enabled:");
 class Candidate {
-  constructor(name = '', linkedInProfile = '', data = null) {
+  constructor(name = "", linkedInProfile = "", data = null) {
     if (!instance) {
       instance = this;
     }
@@ -42,23 +42,23 @@ const popupSidebar = `
   </nav>
 </div>`;
 
-const routeToJoin = '/apply';
+const routeToJoin = "/apply";
 
 function openSidebar() {
-  const element = document.getElementById('thinkify_modal');
-  element.classList.add('menu-open');
-  $('#modal__close').click(closeSidebar);
+  const element = document.getElementById("thinkify_modal");
+  element.classList.add("menu-open");
+  $("#modal__close").click(closeSidebar);
 }
 
 function addIframeToSidebar(src) {
-  const iframe = document.createElement('iframe');
-  document.getElementById('iframe-wrapper').appendChild(iframe);
+  const iframe = document.createElement("iframe");
+  document.getElementById("iframe-wrapper").appendChild(iframe);
   iframe.src = src;
 }
 
 function showTestResults(candidateInfo) {
   openSidebar();
-  document.getElementsByTagName('body')[0].classList.add('hiddenScroll');
+  document.getElementsByTagName("body")[0].classList.add("hiddenScroll");
   const src = `${getConfig().PRODUCTION_URL}/?find=${candidateInfo}&hf=true`;
   addIframeToSidebar(src);
 }
@@ -69,9 +69,9 @@ const getDetailsOfCandidate = () => {
   );
 
   const linkedInProfile = contentExtracted?.included[0]?.publicIdentifier;
-  const firstName = contentExtracted?.included[0]?.firstName || '';
-  const lastName = contentExtracted?.included[0]?.lastName || '';
-  const name = firstName + ' ' + lastName;
+  const firstName = contentExtracted?.included[0]?.firstName || "";
+  const lastName = contentExtracted?.included[0]?.lastName || "";
+  const name = firstName + " " + lastName;
 
   candidateInfo.setDetails((linkedInProfile, name));
 
@@ -82,20 +82,20 @@ const getDetailsOfCandidate = () => {
 };
 
 const getCandiateLinkedInProfile = (thinkifybutton) => {
-  console.log('thinkifybutton:', thinkifybutton);
+  console.log("thinkifybutton:", thinkifybutton);
   const url = thinkifybutton
-    .closest('.entity-result__item')
-    .find('.app-aware-link')[0].href;
+    .closest(".entity-result__item")
+    .find(".app-aware-link")[0].href;
   linkedInProfile = url.slice(
-    'https://www.linkedin.com/in/'.length,
-    url.indexOf('?')
+    "https://www.linkedin.com/in/".length,
+    url.indexOf("?")
   );
   return linkedInProfile;
 };
 
 function showMainPopupFirst(event) {
   // find the element which clicked we have this and event
-  const isThinkifyEvent = $(event.target).closest('.thinkify-info');
+  const isThinkifyEvent = $(event.target).closest(".thinkify-info");
   if (isThinkifyEvent.length) {
     event.stopPropagation();
     const candidateLinkedIn = getCandiateLinkedInProfile(isThinkifyEvent);
@@ -105,10 +105,10 @@ function showMainPopupFirst(event) {
 }
 
 function closeSidebar() {
-  const element = document.getElementById('thinkify_modal');
-  element.classList.remove('menu-open');
-  $('#iframe-wrapper').html('');
-  document.getElementsByTagName('body')[0].classList.remove('hiddenScroll');
+  const element = document.getElementById("thinkify_modal");
+  element.classList.remove("menu-open");
+  $("#iframe-wrapper").html("");
+  document.getElementsByTagName("body")[0].classList.remove("hiddenScroll");
 }
 
 const getContentJson = async (linkedInProfile) => {
@@ -126,9 +126,9 @@ const getButtonName = (candidate) => {
   }
 
   const buttonName = {
-    1: 'Check Info',
-    2: 'Vet yourself',
-    3: 'Next Step',
+    1: "Check Info",
+    2: "Vet yourself",
+    3: "Next Step",
   };
   const addDetailsButton = `<button class="thinkify-info artdeco-button artdeco-button--2 artdeco-button--secondary ember-view">
 		<span class="artdeco-button__text">
@@ -143,39 +143,39 @@ function addButtonIfCorrectPage() {
   // on click show the pop by making the api call with that current api call of the user and display info
 
   let allButtonsToClick = document.getElementsByClassName(
-    'artdeco-button artdeco-button--2 artdeco-button--secondary ember-view'
+    "artdeco-button artdeco-button--2 artdeco-button--secondary ember-view"
   );
   allButtonsToClick = Array(...allButtonsToClick).filter(
     (it) =>
-      it?.innerHTML?.includes('Message') ||
-      it?.innerHTML?.includes('Connect') ||
-      it?.innerHTML?.includes('Follow')
+      it?.innerHTML?.includes("Message") ||
+      it?.innerHTML?.includes("Connect") ||
+      it?.innerHTML?.includes("Follow")
   );
-  console.log('allButtonsToClick:', allButtonsToClick);
+  console.log("allButtonsToClick:", allButtonsToClick);
   allButtonsToClick.forEach((buttons) => {
     // add Thinkify button for all
     const model = $(buttons).closest(
-      '.entity-result__actions.entity-result__divider'
+      ".entity-result__actions.entity-result__divider"
     );
 
     function appendButton(model, buttonView) {
-      (newdiv2 = document.createElement('div')),
-        (existingdiv1 = document.getElementById('foo'));
+      (newdiv2 = document.createElement("div")),
+        (existingdiv1 = document.getElementById("foo"));
       model.append(buttonView, [newdiv2, existingdiv1]);
     }
 
-    const buttonToShow = getButtonName('');
+    const buttonToShow = getButtonName("");
     appendButton(model, buttonToShow);
   });
 
   setTimeout(() => {
     function appendSidebar(buttonView) {
-      (newdiv2 = document.createElement('div')),
-        (existingdiv1 = document.getElementById('foo'));
-      $('body').append(buttonView, [newdiv2, existingdiv1]);
+      (newdiv2 = document.createElement("div")),
+        (existingdiv1 = document.getElementById("foo"));
+      $("body").append(buttonView, [newdiv2, existingdiv1]);
       document
-        .getElementById('body-overlay')
-        .addEventListener('click', closeSidebar);
+        .getElementById("body-overlay")
+        .addEventListener("click", closeSidebar);
     }
 
     appendSidebar(popupSidebar);
@@ -195,7 +195,7 @@ function addShowRecommandedButton() {
   let count = 0;
   const id = setInterval(() => {
     const search_container = document.querySelector(
-      '.search-results-container'
+      ".search-results-container"
     );
     count++;
     if (count === 10) {
@@ -204,18 +204,18 @@ function addShowRecommandedButton() {
 
     if (search_container) {
       clearInterval(id);
-      console.log('helo in search');
+      console.log("helo in search");
 
-      const h2_element = search_container.querySelector('h2');
+      const h2_element = search_container.querySelector("h2");
       const clonedNode = h2_element.cloneNode(true);
       h2_element.remove();
 
-      const container_div = document.createElement('div');
-      container_div.classList.add('thinkify_wrapper');
+      const container_div = document.createElement("div");
+      container_div.classList.add("thinkify_wrapper");
 
-      const button = document.createElement('button');
-      button.textContent = 'Show Candidates';
-      button.addEventListener('click', handleShowRecommandedCandidates);
+      const button = document.createElement("button");
+      button.textContent = "Show Candidates";
+      button.addEventListener("click", handleShowRecommandedCandidates);
 
       container_div.append(clonedNode);
       container_div.append(button);
@@ -227,14 +227,33 @@ function addShowRecommandedButton() {
 }
 
 $(document).ready(function () {
-  console.log('ready!');
+  console.log("ready!");
 
-  window.addEventListener('locationchange', function () {
-    console.log('location changed!');
-  });
+  let previousUrl = "";
 
+  const observer = new MutationObserver(() => {
+  if (window.location.href !== previousUrl) {
+  
+  previousUrl = window.location.href;
+  // do your thing
+  
   setTimeout(() => {
     addButtonIfCorrectPage();
     addShowRecommandedButton();
   }, 5000);
+
+   }
+  });
+  const config = { subtree: true, childList: true };
+
+  // start observing change
+  observer.observe(document, config);
+
+
+  window.addEventListener("locationchange", function () {
+    console.log("location changed!");
+  });
+
+  
 });
+

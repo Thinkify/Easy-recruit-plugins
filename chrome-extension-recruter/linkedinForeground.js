@@ -152,21 +152,26 @@ function addButtonIfCorrectPage() {
       it?.innerHTML?.includes('Follow')
   );
   console.log('allButtonsToClick:', allButtonsToClick);
-  allButtonsToClick.forEach((buttons) => {
-    // add Thinkify button for all
-    const model = $(buttons).closest(
-      '.entity-result__actions.entity-result__divider'
-    );
 
-    function appendButton(model, buttonView) {
-      (newdiv2 = document.createElement('div')),
-        (existingdiv1 = document.getElementById('foo'));
-      model.append(buttonView, [newdiv2, existingdiv1]);
-    }
+  const isCheckInfoAlreadyPresent = $('.thinkify-info').length;
 
-    const buttonToShow = getButtonName('');
-    appendButton(model, buttonToShow);
-  });
+  if(!isCheckInfoAlreadyPresent){
+    allButtonsToClick.forEach((buttons) => {
+      // add Thinkify button for all
+      const model = $(buttons).closest(
+        '.entity-result__actions.entity-result__divider'
+      );
+  
+      function appendButton(model, buttonView) {
+        (newdiv2 = document.createElement('div')),
+          (existingdiv1 = document.getElementById('foo'));
+        model.append(buttonView, [newdiv2, existingdiv1]);
+      }
+  
+      const buttonToShow = getButtonName('');
+      appendButton(model, buttonToShow);
+    });
+  }
 
   setTimeout(() => {
     function appendSidebar(buttonView) {
@@ -205,6 +210,11 @@ function addShowRecommandedButton() {
     if (search_container) {
       clearInterval(id);
       console.log('helo in search');
+      const isThinkifyWrapperPresent = $('.thinkify_wrapper').length;
+
+      if(isThinkifyWrapperPresent){
+        return;
+      }
 
       const h2_element = search_container.querySelector('h2');
       const clonedNode = h2_element.cloneNode(true);

@@ -229,6 +229,26 @@ function addShowRecommandedButton() {
 $(document).ready(function () {
   console.log('ready!');
 
+  let previousUrl = "";
+
+  const observer = new MutationObserver(() => {
+  if (window.location.href !== previousUrl) {
+  
+  previousUrl = window.location.href;
+  // do your thing
+  
+  setTimeout(() => {
+    addButtonIfCorrectPage();
+    addShowRecommandedButton();
+  }, 5000);
+
+   }
+  });
+  const config = { subtree: true, childList: true };
+
+  // start observing change
+  observer.observe(document, config);
+
   window.addEventListener('locationchange', function () {
     console.log('location changed!');
   });

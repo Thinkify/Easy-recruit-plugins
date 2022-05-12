@@ -212,29 +212,44 @@ const scrapeData = async () => {
     return;
   }
 
-    saveTheRecomendedJobs();
+  saveTheRecomendedJobs();
+};
+
+const contactType = {
+  recruiter: "RECRUITER",
+  engineers: "ENGINEER",
 };
 
 const saveRecruiterOfCompany = async () => {
   // check if the url have recruiter as key word
   const params = new URLSearchParams(location.search);
   let keys = params.get("keywords");
-  console.log("keys:", keys);
-  if (!keys.includes("recruiter")) {
+  console.log(`==> : file: linkedinForeground.js : line 227 : keys`, keys);
+  const showProceed = keys.includes("recruiter") || keys.includes("engineers");
+  console.log(
+    `==> : file: linkedinForeground.js : line 229 : showProceed`,
+    showProceed
+  );
+
+  if (!showProceed) {
     return;
   }
-  const companyName = keys.replace("recruiter", "").trim().toLowerCase();
+
+  const keywords = keys.includes('recruiter') ? 'recruiter' : 'engineers';
+  const companyName = keys.replace(keywords, "").trim().toLowerCase();
 
   let listOfRecruiterOfCompany = Array(
     ...$(".reusable-search__result-container ")
   ).map((item) => {
+    let name = $(item).find(".app-aware-link span span")[0].innerHTML;
+    name = name.replace("<!---->", "");
+    name = name.replace("\x3C!---->", "");
     return {
       image: $(item).find(".entity-result__universal-image img").attr("src"),
       linkedIn: $(item).find("a.app-aware-link")[1].href,
-      name: $(item)
-        .find(".app-aware-link span span")[0]
-        .innerHTML.replace("<!---->", ""),
+      name,
       companyName,
+      type: contactType[keywords],
     };
   });
 
@@ -247,7 +262,9 @@ const saveRecruiterOfCompany = async () => {
     };
   });
 
-  listOfRecruiterOfCompany = listOfRecruiterOfCompany.filter(item => item.linkedIn)
+  listOfRecruiterOfCompany = listOfRecruiterOfCompany.filter(
+    (item) => item.linkedIn
+  );
 
   console.log(
     "🚀 ~ file: linkedinForeground.js ~ line 238 ~ listOfRecruiterOfCompany ~ listOfRecruiterOfCompany",
@@ -257,9 +274,8 @@ const saveRecruiterOfCompany = async () => {
   try {
     await postLinkedInContactData(listOfRecruiterOfCompany);
   } catch (error) {
-    console.log("error",error);
+    console.log("error", error);
   }
-
 };
 
 const saveTheRecomendedJobs = async () => {
@@ -300,11 +316,11 @@ $(document).ready(function () {
       console.log(`URL changed from ${previousUrl} to ${window.location.href}`);
       previousUrl = window.location.href;
       // do your thing
-      console.log('trigger');
+      console.log("trigger");
     }
   });
   const config = { subtree: true, childList: true };
-  
+
   // start observing change
   observer.observe(document, config);
 });

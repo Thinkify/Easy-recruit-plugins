@@ -45,10 +45,26 @@ const getDetailsByAny = (reqObject) => {
   });
 };
 
+const getAllCompanyDataExtrationNotCompleted = (reqObject) => {
+  return new Promise((resolve, reject) => {
+    var { email } = reqObject;
+    const urlParams = createObjectParams({ email });
+    fetch(`${DEVELOPMENT_URL}/company/getAllCompanyDataExtrationNotCompleted`)
+      .then((response) => response.json())
+      .then((data) => {
+        resolve(data);
+      })
+      .catch((err) => {
+        console.log('error:', err);
+        reject(err);
+      });
+  });
+};
+
 function getConfig() {
   let CONFIG = {
     PRODUCTION_URL: 'https://sleepy-meadow-81233.herokuapp.com',
-    DEVELOPMENT_URL: 'http://localhost:3000',
+    DEVELOPMENT_URL: 'http://localhost:5000',
     B_PROD_URL: 'https://shortline-be.herokuapp.com/api/v1/candidates',
     B_DEV_URL: 'http://localhost:5000/api/v1/candidates',
   };

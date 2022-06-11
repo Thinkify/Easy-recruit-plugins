@@ -51,17 +51,20 @@ function showTestResults() {
   console.log("candidate:", candidateInfo.getDetais());
 
   const { data } = candidateInfo.getDetais();
+  const urlSearchParams = new URLSearchParams(window.location.search);
+  const keywords = urlSearchParams.get('keywords');
+  const companyName = keywords.replace('immediate','').trim();
   // iframe.src = `${getConfig().DEVELOPMENT_URL}`;
   if (data?.linkedInProfile && data?.testResult) {
     iframe.src = `${getConfig().PRODUCTION_URL}/?linkedInProfile=${
       data?.linkedInProfile
-    }`;
+    }&companyName=${companyName}`;
   } else if (data?.linkedInProfile) {
     iframe.src = `${getConfig().PRODUCTION_URL}/take-test`;
   } else {
     iframe.src = `${
       getConfig().PRODUCTION_URL
-    }/apply/?linkedInProfile=${linkedInProfile}&name=${name}`;
+    }/apply/?linkedInProfile=${linkedInProfile}&name=${name}&companyName=${companyName}`;
   }
 }
 
@@ -180,6 +183,9 @@ function getInfoFromCard(jobHtml, skills) {
   url = url.replace(/\n/g, "").trim();
   title = title.replace(/\n/g, "").trim();
   companyName = companyName.replace(/\n/g, "").trim().toLowerCase();
+  if(!companyId){
+    return null;
+  }
   companyId = companyId.replace(/\n/g, "").trim();
   companyId = companyId.split("/");
   companyId = companyId[companyId.length - 2];
@@ -289,9 +295,10 @@ const saveTheRecomendedJobs = async () => {
   skills = skills?.split(" ");
   skills = skills?.length ? skills.filter((item) => item.trim()) : [];
   if (skills?.length) {
-    var listToSave = Array(...allTheListOfJobs).map((item) =>
+    let listToSave = Array(...allTheListOfJobs).map((item) =>
       getInfoFromCard(item, skills)
     );
+    listToSave = listToSave.filter(item => item);
     console.log("start Scraping", listToSave);
     const responce = await postgetDetailsByLinkedInIdData(listToSave);
     console.log("responce:", responce);

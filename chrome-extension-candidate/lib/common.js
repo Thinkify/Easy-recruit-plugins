@@ -22,6 +22,27 @@ const getDetailsByLinkedInId = (linkedINProfile = '') => {
   });
 };
 
+const getCompanyDetailsByName= ( name = '') => {
+  return new Promise((resolve, reject) => {
+    fetch(
+      `${
+        getConfig().BE_URL
+      }/company/getCompany/${name}`
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        const { Company } = data;
+        resolve({
+          ...Company[0],
+        });
+      })
+      .catch((err) => {
+        console.log('error:', err);
+        reject(err);
+      });
+  });
+};
+
 async function postgetDetailsByLinkedInIdData(data = {}) {
   // Default options are marked with *
   const url = `${getConfig().BE_URL}/jobs/registerJobsInBulk`;

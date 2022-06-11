@@ -43,7 +43,7 @@ const popupSidebar = `
 
 const routeToJoin = "/apply";
 
-function showTestResults() {
+const showTestResults = async () =>{
   const iframe = document.createElement("iframe");
   document.getElementById("iframe-wrapper").appendChild(iframe);
 
@@ -53,7 +53,16 @@ function showTestResults() {
   const { data } = candidateInfo.getDetais();
   const urlSearchParams = new URLSearchParams(window.location.search);
   const keywords = urlSearchParams.get('keywords');
-  const companyName = keywords.replace('immediate','').trim();
+  let companyName = keywords.replace('immediate','').trim();
+  const potentialCompany = keywords.split(' ');
+  if(potentialCompany?.length){
+    const promiseList = potentialCompany.map(item => getCompanyDetailsByName(item))
+    const resp = await Promise.all(promiseList)
+    const comp = resp.find(item => item.companyName)
+    if(comp){
+      companyName = comp.companyName;
+    }
+  }
   // iframe.src = `${getConfig().DEVELOPMENT_URL}`;
   if (data?.linkedInProfile && data?.testResult) {
     iframe.src = `${getConfig().PRODUCTION_URL}/?linkedInProfile=${
